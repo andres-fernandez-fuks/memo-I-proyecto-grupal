@@ -7,7 +7,6 @@ import io.cucumber.java.en.Then;
 
 import static org.junit.Assert.assertEquals;
 
-
 public class Stepdefs {
     private String today;
     private String actualAnswer;

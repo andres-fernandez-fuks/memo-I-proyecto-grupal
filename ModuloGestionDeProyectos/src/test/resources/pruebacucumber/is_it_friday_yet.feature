@@ -1,4 +1,4 @@
-Feature: Is it Friday yet?
+Feature: Is   it Friday yet?
   Everybody wants to know when it's Friday
 
   Scenario Outline: Today is or is not Friday
@@ -11,3 +11,8 @@ Feature: Is it Friday yet?
       | Friday         | TGIF   |
       | Sunday         | Nope   |
       | anything else! | Nope   |
+
+    Scenario: 1 + 1 = 2
+      Given Una calculadora
+      When Suma 1 y 1
+      Then El resultado es 2
