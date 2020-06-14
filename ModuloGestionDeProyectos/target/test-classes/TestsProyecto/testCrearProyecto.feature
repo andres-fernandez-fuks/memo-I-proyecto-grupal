@@ -4,5 +4,3 @@ Feature: Creacion de un proyecto
     Given un listado de proyectos vacio
     When creo un proyecto con nombre "ProyectoPrueba"
     Then el listado de proyectos pasa a tener un elemento.
-
-
