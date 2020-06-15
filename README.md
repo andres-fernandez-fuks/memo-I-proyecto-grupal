@@ -6,7 +6,7 @@ Opción B:
 > ./mvnw clean package  (esto genera un archivo JAR ejecutable)
 > java -jar target/gs-rest-service-0.1.0.jar
 
-Luego acceder a (http://localhost:8080/)[http://localhost:8080/] con el endpoint correspondiente.
+Luego acceder a [http://localhost:8080/](http://localhost:8080/) con el endpoint correspondiente.
 
 ## Otro detalles  
 Los controladores se marcan con la anotación `@RestController`.
