@@ -15,6 +15,14 @@ public class ProyectosRepository {
         return proyectos;
     }
 
+    public Proyecto obtenerProyecto(long id){
+        for (int i = 0; i< proyectos.size(); i++){
+            if (proyectos.get(i).getId() == id){
+                return proyectos.get(i);
+            }
+        }
+        return null;
+    }
     public Proyecto save(Proyecto proyecto) {
         proyectos.add(proyecto);
         return proyectos.get(proyectos.size()-1);

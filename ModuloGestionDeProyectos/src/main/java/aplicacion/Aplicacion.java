@@ -7,10 +7,10 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackageClasses = ProyectoController.class)
-public class Applicacion {
+public class Aplicacion {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Applicacion.class, args);
+		SpringApplication.run(Aplicacion.class, args);
 	}
 
 }

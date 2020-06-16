@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 public class ProyectoController {
-    private final AtomicLong counter = new AtomicLong(1);
+    //private final AtomicLong counter = new AtomicLong(1);
     private final ProyectosRepository repositorio = new ProyectosRepository();
 
     @GetMapping("/proyectos")
@@ -18,6 +18,10 @@ public class ProyectoController {
         return repositorio.findAll();
     }
 
+    @GetMapping("/proyectos/{id}")
+    Proyecto obtenerProyecto(@PathVariable(value="id") long id){
+        return repositorio.obtenerProyecto(id);
+    }
     @PostMapping("/proyectos")
     Proyecto newProyecto(@RequestBody Proyecto proyecto){
         return repositorio.save(proyecto);
