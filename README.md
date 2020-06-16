@@ -15,3 +15,9 @@ Para vincular un determinado endpoint (url) se usan anotacion como `@GetMapping`
 
 Para recibir parámetros desde la url se usa `@RequestParam`
 > http://localhost:8080/proyecto?nombre=Sistema de gestión --> crea un proyecto con el nombre sistema de gestión
+
+Para visualizar los proyectos escribir esto en una terminal, no en la que se corre la API:
+curl -v GET localhost:8080/proyectos
+
+Para crear un nuevo proyecto escribir esto en una terminal, no en la que se corre la API:
+curl -v POST localhost:8080/proyectos -H 'Content-type:application/json' -d '{"id":..., "nombre":"..."}'
