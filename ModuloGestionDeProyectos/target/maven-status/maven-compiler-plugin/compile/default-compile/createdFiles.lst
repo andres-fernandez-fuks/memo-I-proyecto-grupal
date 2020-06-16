@@ -1,0 +1,5 @@
+modelo/Proyecto.class
+modelo/ProyectosRepository.class
+TestsProyecto/ListadoDeProyectos.class
+controladores/ProyectoController.class
+aplicacion/Applicacion.class

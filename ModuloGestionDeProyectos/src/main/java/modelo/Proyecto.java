@@ -1,7 +1,9 @@
 package modelo;
 
+import com.fasterxml.jackson.annotation.JsonTypeId;
+
 public class Proyecto {
-    private long id;
+    private @JsonTypeId long id;
     private String nombre;
 
     public Proyecto(long id, String nombre) {
