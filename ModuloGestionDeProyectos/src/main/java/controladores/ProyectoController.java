@@ -5,32 +5,30 @@ import modelo.Proyecto;
 import modelo.ProyectosRepository;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.Map;
 
 @RestController
 public class ProyectoController {
-    //private final AtomicLong counter = new AtomicLong(1);
     private final ProyectosRepository repositorio = new ProyectosRepository();
+    //Grupal
 
     @GetMapping("/proyectos")
-    List<Proyecto> all(){
+    Map<Long,Proyecto> all(){
         return repositorio.findAll();
     }
 
-    @GetMapping("/proyectos/{id}")
-    Proyecto obtenerProyecto(@PathVariable(value="id") long id){
-        return repositorio.obtenerProyecto(id);
-    }
     @PostMapping("/proyectos")
     Proyecto newProyecto(@RequestBody Proyecto proyecto){
         return repositorio.save(proyecto);
     }
-    /*
-    @GetMapping("/proyecto")
-    public Proyecto greeting(@RequestParam(value = "nombre", defaultValue = "Sin título") String nombre) {
-        return new Proyecto(counter.incrementAndGet(), nombre);
+    //Individual
+    @GetMapping("/proyectos/{id}")
+    Proyecto obtenerProyecto(@PathVariable(value="id") long id){
+        return repositorio.obtenerProyecto(id);
     }
-*/
 
+    @PutMapping("/proyectos/{id}")
+    Proyecto modificarProyecto(@PathVariable(value="id") long id, @RequestParam String nombre){
+        return repositorio.modificar(id, nombre);
+    }  
 }

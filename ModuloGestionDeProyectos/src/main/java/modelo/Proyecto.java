@@ -3,7 +3,7 @@ package modelo;
 import com.fasterxml.jackson.annotation.JsonTypeId;
 
 public class Proyecto {
-    private @JsonTypeId long id;
+    private @JsonTypeId final long id;
     private String nombre;
 
     public Proyecto(long id, String nombre) {
@@ -17,5 +17,9 @@ public class Proyecto {
 
     public String getNombre() {
         return nombre;
+    }
+
+    public void modificar(String nombre) {
+        this.nombre = nombre;
     }
 }
