@@ -11,7 +11,6 @@ import java.util.Map;
 public class ProyectoController {
     private final ProyectosRepository repositorio = new ProyectosRepository();
     //Grupal
-
     @GetMapping("/proyectos")
     Map<Long,Proyecto> all(){
         return repositorio.findAll();
@@ -30,5 +29,10 @@ public class ProyectoController {
     @PutMapping("/proyectos/{id}")
     Proyecto modificarProyecto(@PathVariable(value="id") long id, @RequestParam String nombre){
         return repositorio.modificar(id, nombre);
-    }  
+    }
+
+    @DeleteMapping("proyectos/{id}")
+    void borrarProyecto(@PathVariable(value="id") long id){
+        repositorio.borrar(id);
+    }
 }

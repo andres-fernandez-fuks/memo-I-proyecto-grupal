@@ -38,4 +38,8 @@ public class ProyectosRepository {
         }
         return proyectos.get(id);
     }
+
+    public void borrar(long id) {
+        proyectos.remove(id);
+    }
 }
