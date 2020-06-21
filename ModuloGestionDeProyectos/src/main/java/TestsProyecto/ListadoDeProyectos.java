@@ -12,4 +12,8 @@ public class ListadoDeProyectos {
     public void crearProyecto(String nombre) {
         proyectos.add(nombre);
     }
+
+    public void eliminarProyecto(String nombre) {
+        proyectos.remove(nombre);
+    }
 }
