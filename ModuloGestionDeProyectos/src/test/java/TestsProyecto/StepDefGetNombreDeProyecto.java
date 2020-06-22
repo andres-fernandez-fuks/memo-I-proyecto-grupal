@@ -23,6 +23,4 @@ public class StepDefGetNombreDeProyecto {
 
     @Then("se me devuelve el nombre correcto")
     public void elNombreDelProyectoEsCorrecto() { assertEquals(nombreOriginal,nombreDevuelto); }
-
-
 }
