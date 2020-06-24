@@ -21,3 +21,8 @@ Para visualizar los proyectos escribir esto en una terminal, no en la que se cor
 
 Para crear un nuevo proyecto escribir esto en una terminal, no en la que se corre la API:
 > curl -v POST localhost:8080/proyectos -H 'Content-type:application/json' -d '{"id":..., "nombre":"..."}'  
+
+## Definiciones en la Aplicación de Spring
+Los **componentes** que esten en otra carpeta (por ejemplo controladores) deben agregarse con la anotación `@ComponentScan(basePackageClasses = <clase>)` en la Aplicación. Donde <clase> es una clase incluida en el paquete donde se encuentra el componente que se quiere agregar. 
+Las **entidades** que esten en otra carpeta deben agregarse con `@EntityScan(basePackageClasses = <clase>)`. Donde <clase> es una clase incluida en el paquete donde se encuentra el componente que se quiere agregar. 
+Los **repositorios** que esten en otra carpeta deben agregarse con `@EnableJpaRepositories(basePackageClasses = <clase>)`. Donde <clase> es una clase incluida en el paquete donde se encuentra el componente que se quiere agregar. 
