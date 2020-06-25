@@ -12,3 +12,8 @@ Feature: Creacion de un proyecto
       | 2 | adada   |
       | 4 | adsjkla |
     Then el listado de proyectos pasa a tener 3 elementos.
+
+  Scenario: Creo un proyecto de implementación
+    Given un proyecto de implementación creado con id 1 y nombre "Proyecto de Implementación"
+    When pregunto el tipo de proyecto
+    Then se me devuelve "Implementación"

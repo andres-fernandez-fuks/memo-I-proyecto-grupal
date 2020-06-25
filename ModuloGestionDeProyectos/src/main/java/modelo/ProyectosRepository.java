@@ -3,12 +3,8 @@ package modelo;
 import java.util.*;
 
 public class ProyectosRepository {
-    private final Map<Long,Proyecto> proyectos = new HashMap<Long, Proyecto>();
 
-    public ProyectosRepository() {
-        Proyecto inicial = new Proyecto(0, "inicial");
-        proyectos.put(inicial.getId(), inicial);
-    }
+    private final Map<Long,Proyecto> proyectos = new HashMap<Long, Proyecto>();
 
     public Map<Long,Proyecto> findAll() {
         return proyectos;
@@ -32,7 +28,7 @@ public class ProyectosRepository {
         if(aux != null){
             aux.modificar(nombre);
         } else {
-            proyectos.put(id, new Proyecto(id, nombre));
+            proyectos.put(id, new ProyectoDeImplementacion(id, nombre));
         }
         return proyectos.get(id);
     }

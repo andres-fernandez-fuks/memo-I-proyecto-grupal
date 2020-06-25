@@ -4,33 +4,35 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import modelo.Proyecto;
+import modelo.ProyectoDeDesarrollo;
+import modelo.ProyectosRepository;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
 public class StepDefCrearProyecto {
-    private ListadoDeProyectos listado;
+    private ProyectosRepository listado;
     @Given("un listado de proyectos vacio")
     public void unListadoDeProyectosVacio() {
-        listado = new ListadoDeProyectos();
+        listado = new ProyectosRepository();
     }
 
-    @When("creo un proyecto con nombre {string}")
-    public void creoUnProyectoConNombreYDescripcion(String nombre) {
-        listado.crearProyecto(nombre);
+    @When("creo algunos proyectos con nombre e id")
+    public void creoAlgunosProyectosConNombreEId(DataTable dt) {
+        List<List<String>> lista = dt.asLists();
+        Proyecto proyecto;
+        for (List<String> proyectos : lista) {
+            proyecto = new ProyectoDeDesarrollo(Integer.parseInt(proyectos.get(0)),proyectos.get(1));
+            listado.save(proyecto);
+        }
     }
 
     @Then("el listado de proyectos pasa a tener {int} elementos.")
     public void elProyectoSeCreaYSeAgregaAlListadoDeProyectos(int cantElementos) {
-        assertEquals(cantElementos, listado.cantElementos());
+        assertEquals(cantElementos, listado.obtenerCantidadDeProyectos());
     }
 
-    @When("creo algunos proyectos con nombre e id")
-    public void creoUnProyectoConNombreEId(DataTable dt) {
-        List<List<String>> lista = dt.asLists();
-        for (List<String> proyectos : lista) {
-            listado.crearProyecto(proyectos.get(1));
-        }
-    }
+
 }

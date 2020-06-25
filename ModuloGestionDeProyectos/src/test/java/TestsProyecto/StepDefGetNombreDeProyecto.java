@@ -3,7 +3,7 @@ package TestsProyecto;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import modelo.Proyecto;
+import modelo.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -14,7 +14,7 @@ public class StepDefGetNombreDeProyecto {
     private Proyecto proyecto;
     @Given("un proyecto creado con cierto nombre {string}")
     public void creoUnProyectoconNombre(String nombre) {
-        proyecto = new Proyecto(1,nombre);
+        proyecto = new ProyectoDeDesarrollo(1,nombre);
         nombreOriginal = nombre;
     }
 
