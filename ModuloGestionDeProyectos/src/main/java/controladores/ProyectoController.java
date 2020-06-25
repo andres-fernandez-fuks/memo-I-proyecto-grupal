@@ -18,7 +18,7 @@ public class ProyectoController {
 
     @PostMapping("/proyectos")
     Proyecto newProyecto(@RequestBody Proyecto proyecto){
-        return repositorio.save(proyecto);
+        return repositorio.agregarProyecto(proyecto);
     }
     //Individual
     @GetMapping("/proyectos/{id}")

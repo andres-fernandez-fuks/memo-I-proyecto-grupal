@@ -25,7 +25,7 @@ public class StepDefCrearProyecto {
         Proyecto proyecto;
         for (List<String> proyectos : lista) {
             proyecto = new ProyectoDeDesarrollo(Integer.parseInt(proyectos.get(0)),proyectos.get(1));
-            listado.save(proyecto);
+            listado.agregarProyecto(proyecto);
         }
     }
 

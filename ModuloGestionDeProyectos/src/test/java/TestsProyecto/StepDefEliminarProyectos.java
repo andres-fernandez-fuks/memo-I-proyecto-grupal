@@ -9,7 +9,7 @@ import modelo.ProyectosRepository;
 
 import static org.junit.Assert.assertEquals;
 
-public class StepDefEliminarMultiplesProyectos {
+public class StepDefEliminarProyectos {
 
     private ProyectosRepository listadoDeProyectos = new ProyectosRepository();
 
@@ -18,7 +18,7 @@ public class StepDefEliminarMultiplesProyectos {
         Proyecto proyecto;
         for (int i = 0; i < cantidadDeProyectos; i++) {
             proyecto = new ProyectoDeImplementacion(i,"Proyecto "+i);
-            listadoDeProyectos.save(proyecto);
+            listadoDeProyectos.agregarProyecto(proyecto);
         }
     }
 

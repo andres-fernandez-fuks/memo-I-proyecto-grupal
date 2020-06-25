@@ -29,11 +29,11 @@ public class StepDefTiposDeProyecto {
         for (Map<String,String> fila: listaDeMapas) {
             if (fila.get("tipo").equals("Implementación")) {
                 proyecto = new ProyectoDeImplementacion(Integer.parseInt(fila.get("id")),fila.get("nombre"));
-                listadoDeProyectos.save(proyecto);
+                listadoDeProyectos.agregarProyecto(proyecto);
             }
             else {
                 proyecto = new ProyectoDeDesarrollo(Integer.parseInt(fila.get("id")),fila.get("nombre"));
-                listadoDeProyectos.save(proyecto);
+                listadoDeProyectos.agregarProyecto(proyecto);
             }
         }
     }

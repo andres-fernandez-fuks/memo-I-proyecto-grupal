@@ -18,7 +18,7 @@ public class ProyectosRepository {
         return proyectos.size();
     }
 
-    public Proyecto save(Proyecto proyecto) {
+    public Proyecto agregarProyecto(Proyecto proyecto) {
         proyectos.put(proyecto.getId(), proyecto);
         return proyectos.get(proyecto.getId());
     }
