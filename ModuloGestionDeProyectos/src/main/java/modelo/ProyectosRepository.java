@@ -18,6 +18,10 @@ public class ProyectosRepository {
         return proyectos.get(id);
     }
 
+    public int obtenerCantidadDeProyectos(){
+        return proyectos.size();
+    }
+
     public Proyecto save(Proyecto proyecto) {
         proyectos.put(proyecto.getId(), proyecto);
         return proyectos.get(proyecto.getId());

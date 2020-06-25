@@ -1,21 +1,14 @@
 Feature: Creacion de un proyecto
 
-  Scenario: Creo el primer proyecto del sistema
-    Given un listado de proyectos vacio
-    When creo un proyecto con nombre "ProyectoPrueba"
-    Then el listado de proyectos pasa a tener 1 elemento.
-
-
   Scenario: Creo un proyecto con un nombre, y lo pregunto
     Given un proyecto creado con cierto nombre "Nuevo Proyecto"
     When pregunto el nombre del proyecto
     Then se me devuelve el nombre correcto
 
-
-  Scenario: Creo el primer proyecto del sistema
+  Scenario: Creo proyectos en el sistema
     Given un listado de proyectos vacio
     When creo algunos proyectos con nombre e id
       | 1 | prueba1 |
       | 2 | adada   |
       | 4 | adsjkla |
-    Then el listado de proyectos pasa a tener 3 elemento.
+    Then el listado de proyectos pasa a tener 3 elementos.

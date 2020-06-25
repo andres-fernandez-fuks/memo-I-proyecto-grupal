@@ -24,4 +24,5 @@ public class SetpDefEliminarProyecto {
     public void elProyectoEliminadoYaNoExiste(String nombre){
         assertEquals(0, listadoDeProyectos.cantElementos());
     }
+
 }

@@ -21,7 +21,7 @@ public class StepDefCrearProyecto {
         listado.crearProyecto(nombre);
     }
 
-    @Then("el listado de proyectos pasa a tener {int} elemento.")
+    @Then("el listado de proyectos pasa a tener {int} elementos.")
     public void elProyectoSeCreaYSeAgregaAlListadoDeProyectos(int cantElementos) {
         assertEquals(cantElementos, listado.cantElementos());
     }
