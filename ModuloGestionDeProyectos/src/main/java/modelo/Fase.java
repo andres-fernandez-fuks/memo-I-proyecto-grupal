@@ -1,25 +1,15 @@
 package modelo;
 
-import com.fasterxml.jackson.annotation.JsonTypeId;
-
 import java.text.ParseException;
 import java.util.Date;
 
-public abstract class Proyecto {
-    protected @JsonTypeId final long id;
-    protected RegistroDeDatos registroDeDatos;
-    protected String tipoDeProyecto;
+public class Fase {
 
-    public Proyecto(long id, String nombre) {
-        this.id = id;
-        this.registroDeDatos = new RegistroDeDatos(nombre);
+    private RegistroDeDatos registroDeDatos;
+
+    public Fase(String nombre) {
+        registroDeDatos.setNombre(nombre);
     }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getTipoDeProyecto() { return tipoDeProyecto; }
 
     public String getNombre() {
         return registroDeDatos.getNombre();
@@ -36,6 +26,5 @@ public abstract class Proyecto {
     public void setFechaDeFinalizacion(String fechaDeFinalizacion) throws ParseException {
         this.registroDeDatos.setFechaDeFinalizacion(fechaDeFinalizacion);
     }
-
 
 }

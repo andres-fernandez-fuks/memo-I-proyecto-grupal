@@ -26,7 +26,7 @@ public class ProyectosRepository {
     public Proyecto modificar(long id, String nombre) {
         Proyecto aux = proyectos.get(id);
         if(aux != null){
-            aux.modificar(nombre);
+            aux.setNombre(nombre);
         } else {
             proyectos.put(id, new ProyectoDeImplementacion(id, nombre));
         }

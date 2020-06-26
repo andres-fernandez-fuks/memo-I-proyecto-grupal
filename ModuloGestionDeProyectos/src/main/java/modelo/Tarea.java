@@ -1,6 +1,7 @@
 package modelo;
 
 import com.fasterxml.jackson.annotation.JsonTypeId;
+import modelo.Estado.EstadoTarea;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -10,29 +11,32 @@ import java.util.Date;
 public class Tarea {
 
     private @JsonTypeId final long id;
-    private String nombre;
-    private String descripcion;
+
+    private RegistroDeDatos registroDeDatos;
     private String responsable;
-    private Date fechaDeInicio;
-    private Date fechaDeFinalizacion;
-    private String estado;
+    private EstadoTarea estado;
 
     public Tarea(long id, String nombre) {
         this.id = id;
-        this.nombre = nombre;
+        this.registroDeDatos = new RegistroDeDatos(nombre);
     }
 
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+    public String getNombre() {
+        return registroDeDatos.getNombre();
+    }
+    public String getDescripcion() { return this.registroDeDatos.getDescripcion();}
+    public Date getFechaDeInicio() { return this.registroDeDatos.getFechaDeInicio();}
+    public Date getFechaDeFinalizacion() { return this.registroDeDatos.getFechaDeFinalizacion();}
 
+    public void setNombre(String nombre) { this.registroDeDatos.setNombre(nombre);}
+    public void setDescripcion(String descripcion) { this.registroDeDatos.setDescripcion(descripcion); }
     public void setFechaDeInicio(String fechaDeInicio) throws ParseException {
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        this.fechaDeInicio = format.parse(fechaDeInicio);
+        this.registroDeDatos.setFechaDeInicio(fechaDeInicio);
+    }
+    public void setFechaDeFinalizacion(String fechaDeFinalizacion) throws ParseException {
+        this.registroDeDatos.setFechaDeFinalizacion(fechaDeFinalizacion);
     }
 
-    public void setFechaDeFinalizacion(String fechaDeFinalizacion) throws ParseException {
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        this.fechaDeFinalizacion = format.parse(fechaDeFinalizacion);
-    }
 
 
 }
