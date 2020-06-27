@@ -13,6 +13,8 @@ public class StepDefGetNombreDeProyecto {
     private String nombreOriginal;
     private String nombreDevuelto;
     private Proyecto proyecto;
+
+
     @Given("un proyecto creado con cierto nombre {string}")
     public void creoUnProyectoconNombre(String nombre) {
         proyecto = new ProyectoDeDesarrollo(1,nombre);

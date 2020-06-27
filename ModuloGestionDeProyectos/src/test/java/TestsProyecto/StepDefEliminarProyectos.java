@@ -1,5 +1,6 @@
 package TestsProyecto;
 
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -12,12 +13,16 @@ import static org.junit.Assert.assertEquals;
 
 public class StepDefEliminarProyectos extends SpringTest{
 
+    @Before
+    public void setup() {
+        listadoDeProyectos.deleteAll();
+    }
     @Given("existen {int} proyectos cargados en el sistema")
     public void existenProyectosCargadosEnElSistema(int cantidadDeProyectos) {
         Proyecto proyecto;
         for (int i = 1; i <= cantidadDeProyectos; i++) {
             proyecto = new ProyectoDeImplementacion(i,"Proyecto "+i);
-            listadoDeProyectos.save(proyecto);
+            listadoDeProyectos.saveNew(proyecto);
         }
     }
 

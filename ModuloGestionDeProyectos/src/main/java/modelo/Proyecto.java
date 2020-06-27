@@ -1,6 +1,5 @@
 package modelo;
 
-import com.fasterxml.jackson.annotation.JsonTypeId;
 import persistencia.EntidadProyecto;
 
 import java.text.ParseException;
@@ -8,19 +7,20 @@ import java.util.Date;
 
 public abstract class Proyecto {
 
-    protected long id;
-    protected String nombre;
+    protected Long id;
+    //protected String nombre;
     protected RegistroDeDatos registroDeDatos;
     protected String tipoDeProyecto;
-    public Proyecto(long id, String nombre) {
+    public Proyecto(Long id, String nombre) {
         this.id = id;
         this.registroDeDatos = new RegistroDeDatos(nombre);
     }
     public void modificar(Proyecto proyecto){
-        this.nombre = proyecto.getNombre();
+        //this.nombre = proyecto.getNombre();
+        registroDeDatos.setNombre(proyecto.getNombre());
         this.tipoDeProyecto = proyecto.getTipoDeProyecto();
     }
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -42,10 +42,15 @@ public abstract class Proyecto {
         this.registroDeDatos.setFechaDeFinalizacion(fechaDeFinalizacion);
     }
 
-    public String getTipoDeProyecto() { return tipoDeProyecto; }
-
 
     public EntidadProyecto obtenerEntidad() {
-        return new EntidadProyecto(id, nombre, tipoDeProyecto);
+        if (id == null){
+            return new EntidadProyecto(registroDeDatos.getNombre(), tipoDeProyecto);
+        }
+        return new EntidadProyecto(id, registroDeDatos.getNombre(), tipoDeProyecto);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

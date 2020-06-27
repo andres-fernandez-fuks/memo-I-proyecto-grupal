@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class EntidadProyecto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected long id;
+    protected Long id;
     protected String nombre;
     protected String tipoDeProyecto;
     public EntidadProyecto() {}
@@ -18,11 +18,16 @@ public class EntidadProyecto {
         this.tipoDeProyecto = tipoDeProyecto;
     }
 
-    public long getId() {
+    public EntidadProyecto(String nombre, String tipoDeProyecto) {
+        this.nombre = nombre;
+        this.tipoDeProyecto = tipoDeProyecto;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -2,6 +2,7 @@ package servicio;
 
 import modelo.Proyecto;
 import persistencia.Conversor;
+import persistencia.EntidadProyecto;
 import persistencia.ProyectosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,17 @@ public class ProyectoService {
     }
 
     public Proyecto save(Proyecto proyecto){
-        proyectosRepository.save(conversor.obtenerEntidad(proyecto));
-        return proyecto;
+        EntidadProyecto entidad = proyectosRepository.save(conversor.obtenerEntidad(proyecto));
+        return conversor.obtenerProyecto(entidad);
+    }
+
+    @Transactional
+    public Proyecto saveNew(Proyecto proyecto){
+        if (proyectosRepository.existsById(proyecto.getId())){
+            proyecto.setId(null);
+        }
+        EntidadProyecto entidad = proyectosRepository.save(conversor.obtenerEntidad(proyecto));
+        return conversor.obtenerProyecto(entidad);
     }
     public void delete(Proyecto proyecto){
         proyectosRepository.delete(conversor.obtenerEntidad(proyecto));
