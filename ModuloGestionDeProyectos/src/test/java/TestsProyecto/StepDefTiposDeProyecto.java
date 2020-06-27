@@ -7,7 +7,8 @@ import io.cucumber.java.en.When;
 import modelo.Proyecto;
 import modelo.ProyectoDeDesarrollo;
 import modelo.ProyectoDeImplementacion;
-import modelo.ProyectosRepository;
+import persistencia.ProyectosRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.util.List;
@@ -15,12 +16,10 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class StepDefTiposDeProyecto {
-
-    private ProyectosRepository listadoDeProyectos;
+public class StepDefTiposDeProyecto extends SpringTest{
 
     @Given("un listado de proyectos")
-    public void unListadoVacio() { listadoDeProyectos = new ProyectosRepository(); }
+    public void unListadoVacio() { listadoDeProyectos.deleteAll(); }
 
     @When("creo proyectos de distinto tipo")
     public void creoProyectos(DataTable dt) {
@@ -29,11 +28,11 @@ public class StepDefTiposDeProyecto {
         for (Map<String,String> fila: listaDeMapas) {
             if (fila.get("tipo").equals("Implementación")) {
                 proyecto = new ProyectoDeImplementacion(Integer.parseInt(fila.get("id")),fila.get("nombre"));
-                listadoDeProyectos.agregarProyecto(proyecto);
+                listadoDeProyectos.save(proyecto);
             }
             else {
                 proyecto = new ProyectoDeDesarrollo(Integer.parseInt(fila.get("id")),fila.get("nombre"));
-                listadoDeProyectos.agregarProyecto(proyecto);
+                listadoDeProyectos.save(proyecto);
             }
         }
     }
@@ -43,12 +42,9 @@ public class StepDefTiposDeProyecto {
         List<Map<String, String>> lista = dt.asMaps();
         int diferencias_encontradas = 0;
         for (Map<String, String> fila : lista) {
-            Proyecto proyecto = listadoDeProyectos.obtenerProyecto(Integer.parseInt(fila.get("id")));
-            if (!(fila.get("tipo").equals(proyecto.getTipoDeProyecto()))) {
-                diferencias_encontradas = 1;
-                break;
-            }
+            Proyecto proyecto = listadoDeProyectos.getOne((long) Integer.parseInt(fila.get("id")));
+            assertEquals(fila.get("tipo"),proyecto.getTipoDeProyecto());
         }
-        assertEquals(0,diferencias_encontradas);
+
     }
 }

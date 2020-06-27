@@ -1,12 +1,16 @@
-package modelo;
+package persistencia;
+
+import modelo.Proyecto;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
+@Repository
+public interface ProyectosRepository extends JpaRepository<EntidadProyecto, Long> {
 
-public class ProyectosRepository {
-
-    private final Map<Long,Proyecto> proyectos = new HashMap<Long, Proyecto>();
-
-    public Map<Long,Proyecto> findAll() {
+   /* public Map<Long,Proyecto> findAll() {
         return proyectos;
     }
 
@@ -36,4 +40,6 @@ public class ProyectosRepository {
     public void borrar(long id) {
         proyectos.remove(id);
     }
+
+    */
 }

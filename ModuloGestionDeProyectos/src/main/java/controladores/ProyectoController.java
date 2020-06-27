@@ -2,37 +2,41 @@ package controladores;
 
 
 import modelo.Proyecto;
-import modelo.ProyectosRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import servicio.ProyectoService;
 
-import java.util.Map;
+import java.util.List;
 
 @RestController
 public class ProyectoController {
-    private final ProyectosRepository repositorio = new ProyectosRepository();
+    @Autowired
+    private ProyectoService servicio;
     //Grupal
     @GetMapping("/proyectos")
-    Map<Long,Proyecto> all(){
-        return repositorio.findAll();
+    List<Proyecto> all(){
+        return servicio.findAll();
     }
 
     @PostMapping("/proyectos")
     Proyecto newProyecto(@RequestBody Proyecto proyecto){
-        return repositorio.agregarProyecto(proyecto);
+        return servicio.save(proyecto);
     }
     //Individual
     @GetMapping("/proyectos/{id}")
     Proyecto obtenerProyecto(@PathVariable(value="id") long id){
-        return repositorio.obtenerProyecto(id);
+        return servicio.getOne(id);
     }
 
     @PutMapping("/proyectos/{id}")
-    Proyecto modificarProyecto(@PathVariable(value="id") long id, @RequestParam String nombre){
-        return repositorio.modificar(id, nombre);
+    Proyecto modificarProyecto(@PathVariable(value="id") long id, @RequestBody Proyecto proyecto){
+        Proyecto actual =  servicio.getOne(id);
+        actual.modificar(proyecto);
+        return actual;
     }
 
     @DeleteMapping("proyectos/{id}")
     void borrarProyecto(@PathVariable(value="id") long id){
-        repositorio.borrar(id);
+        servicio.deleteById(id);
     }
 }

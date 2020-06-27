@@ -26,3 +26,17 @@ Para crear un nuevo proyecto escribir esto en una terminal, no en la que se corr
 Los **componentes** que esten en otra carpeta (por ejemplo controladores) deben agregarse con la anotación `@ComponentScan(basePackageClasses = <clase>)` en la Aplicación. Donde <clase> es una clase incluida en el paquete donde se encuentra el componente que se quiere agregar. 
 Las **entidades** que esten en otra carpeta deben agregarse con `@EntityScan(basePackageClasses = <clase>)`. Donde <clase> es una clase incluida en el paquete donde se encuentra el componente que se quiere agregar. 
 Los **repositorios** que esten en otra carpeta deben agregarse con `@EnableJpaRepositories(basePackageClasses = <clase>)`. Donde <clase> es una clase incluida en el paquete donde se encuentra el componente que se quiere agregar. 
+
+#Crear base de datos de postgreSQL y usuario para conectarse
+>>>$ sudo -u postgres createuser datosaurio
+$ sudo -u postgres createdb prueba
+$ sudo -u postgres psql
+psql=# alter user datosaurio with encrypted password 'corona';
+psql=# grant all privileges on database prueba to datosaurio ;
+
+#Entidades
+- A las entidades hay que agregarles un constructor sin .
+- Las entidades siempre tienen ID > 0.
+
+#Servicios
+- Los métodos de servicios que utilizan más de una vez al repositorio de datos deben ser @Transactional.

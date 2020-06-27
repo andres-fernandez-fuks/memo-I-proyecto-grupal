@@ -6,17 +6,18 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import modelo.Proyecto;
 import modelo.ProyectoDeDesarrollo;
-import modelo.ProyectosRepository;
+import persistencia.ProyectosRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class StepDefCrearProyecto {
-    private ProyectosRepository listado;
+public class StepDefCrearProyecto extends SpringTest{
+
     @Given("un listado de proyectos vacio")
     public void unListadoDeProyectosVacio() {
-        listado = new ProyectosRepository();
+        listadoDeProyectos.deleteAll();
     }
 
     @When("creo algunos proyectos con nombre e id")
@@ -25,13 +26,13 @@ public class StepDefCrearProyecto {
         Proyecto proyecto;
         for (List<String> proyectos : lista) {
             proyecto = new ProyectoDeDesarrollo(Integer.parseInt(proyectos.get(0)),proyectos.get(1));
-            listado.agregarProyecto(proyecto);
+            listadoDeProyectos.save(proyecto);
         }
     }
 
     @Then("el listado de proyectos pasa a tener {int} elementos.")
     public void elProyectoSeCreaYSeAgregaAlListadoDeProyectos(int cantElementos) {
-        assertEquals(cantElementos, listado.obtenerCantidadDeProyectos());
+        assertEquals(cantElementos, listadoDeProyectos.findAll().size());
     }
 
 
