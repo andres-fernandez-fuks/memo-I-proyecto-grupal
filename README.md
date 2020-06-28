@@ -20,7 +20,7 @@ Para visualizar los proyectos escribir esto en una terminal, no en la que se cor
 > curl -v GET localhost:8080/proyectos  
 
 Para crear un nuevo proyecto escribir esto en una terminal, no en la que se corre la API:
-> curl -v POST localhost:8080/proyectos -H 'Content-type:application/json' -d '{"id":..., "nombre":"..."}'  
+> curl -v POST localhost:8080/proyectos -H 'Content-type:application/json' -d '{"id":..., "nombre":"...", "tipoDeProyecto": "Desarrollo" o "Implementación"}'  
 
 ## Definiciones en la Aplicación de Spring
 Los **componentes** que esten en otra carpeta (por ejemplo controladores) deben agregarse con la anotación `@ComponentScan(basePackageClasses = <clase>)` en la Aplicación. Donde <clase> es una clase incluida en el paquete donde se encuentra el componente que se quiere agregar. 
