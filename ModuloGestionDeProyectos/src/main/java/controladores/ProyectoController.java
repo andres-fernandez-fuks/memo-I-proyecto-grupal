@@ -29,7 +29,7 @@ public class ProyectoController {
 
     @PostMapping("/proyectos")
     ResponseEntity<Proyecto> newProyecto(@RequestBody Proyecto proyecto){
-        return new ResponseEntity<Proyecto>(servicio.save(proyecto), HttpStatus.CREATED);
+        return new ResponseEntity<Proyecto>(servicio.saveNew(proyecto), HttpStatus.CREATED);
     }
 
     //Individual
