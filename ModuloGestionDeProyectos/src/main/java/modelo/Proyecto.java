@@ -1,16 +1,24 @@
 package modelo;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import persistencia.EntidadProyecto;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Map;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "tipoDeProyecto")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = ProyectoDeDesarrollo.class, name = "Desarrollo"),
+        @JsonSubTypes.Type(value = ProyectoDeImplementacion.class, name = "Implementación")
+})
 public abstract class Proyecto {
 
     protected Long id;
-    //protected String nombre;
     protected RegistroDeDatos registroDeDatos;
     protected String tipoDeProyecto;
+    public Proyecto(){}
     public Proyecto(Long id, String nombre) {
         this.id = id;
         this.registroDeDatos = new RegistroDeDatos(nombre);
@@ -52,5 +60,20 @@ public abstract class Proyecto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void actualizar(Map<String, Object> parametros) throws ParseException {
+        //No se puede cambiar el tipo de proyecto
+        for (Map.Entry<String, Object> entrada : parametros.entrySet()) {
+            if (entrada.getKey().equals("nombre")) {
+                this.setNombre((String) entrada.getValue());
+            } else if (entrada.getKey().equals("descripcion")) {
+                this.setDescripcion((String) entrada.getValue());
+            } else if (entrada.getKey().equals("fechaDeInicio")) {
+                this.setFechaDeInicio((String) entrada.getValue());
+            } else if (entrada.getKey().equals("fechaDeFinalizacion")) {
+                this.setFechaDeFinalizacion((String) entrada.getValue());
+            }
+        }
     }
 }

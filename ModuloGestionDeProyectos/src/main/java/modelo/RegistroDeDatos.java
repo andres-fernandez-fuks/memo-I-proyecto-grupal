@@ -20,7 +20,7 @@ public class RegistroDeDatos {
     public Date getFechaDeFinalizacion() { return fechaDeFinalizacion;}
 
     public void setNombre(String nombre) { this.nombre = nombre; }
-    public void setDescripcion(String nombre) { this.descripcion = descripcion;}
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion;}
 
     public void setFechaDeInicio(String fechaDeInicio) throws ParseException {
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");

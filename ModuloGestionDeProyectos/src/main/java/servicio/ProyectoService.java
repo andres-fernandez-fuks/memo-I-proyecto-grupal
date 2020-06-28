@@ -1,5 +1,7 @@
 package servicio;
 
+import excepciones.ParametrosInvalidosException;
+import excepciones.ProyectoNotFoundException;
 import modelo.Proyecto;
 import persistencia.Conversor;
 import persistencia.EntidadProyecto;
@@ -8,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProyectoService {
@@ -40,6 +44,9 @@ public class ProyectoService {
 
     @Transactional
     public Proyecto getOne(long id) {
+        if (!proyectosRepository.existsById(id)){
+            throw new ProyectoNotFoundException("Proyecto con id: " + id + " no encontrado");
+        }
         return conversor.obtenerProyecto(proyectosRepository.getOne(id));
     }
 
@@ -49,5 +56,14 @@ public class ProyectoService {
 
     public void deleteAll() {
         proyectosRepository.deleteAll();
+    }
+
+    public void update(Proyecto proyecto, Map<String, Object> parametros) {
+        try{
+            proyecto.actualizar(parametros);
+        } catch (ParseException e){
+            throw new ParametrosInvalidosException(e.getMessage());
+        }
+        proyectosRepository.save(conversor.obtenerEntidad(proyecto));
     }
 }
