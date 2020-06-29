@@ -2,6 +2,7 @@ package modelo;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import modelo.Estado.EstadoProyecto;
 import persistencia.EntidadProyecto;
 
 import java.text.ParseException;
@@ -15,6 +16,8 @@ import java.util.Map;
 })
 public abstract class Proyecto {
 
+    protected EstadoProyecto estado;
+
     protected Long id;
     protected RegistroDeDatos registroDeDatos;
     protected String tipoDeProyecto;
@@ -22,6 +25,7 @@ public abstract class Proyecto {
     public Proyecto(Long id, String nombre) {
         this.id = id;
         this.registroDeDatos = new RegistroDeDatos(nombre);
+        this.estado = EstadoProyecto.NO_INICIADO;
     }
     public void modificar(Proyecto proyecto){
         //this.nombre = proyecto.getNombre();
@@ -40,6 +44,9 @@ public abstract class Proyecto {
     public String getDescripcion() { return this.registroDeDatos.getDescripcion();}
     public Date getFechaDeInicio() { return this.registroDeDatos.getFechaDeInicio();}
     public Date getFechaDeFinalizacion() { return this.registroDeDatos.getFechaDeFinalizacion();}
+    public String getEstado() {
+        return registroDeDatos.getEstado();
+    }
 
     public void setNombre(String nombre) { this.registroDeDatos.setNombre(nombre);}
     public void setDescripcion(String descripcion) { this.registroDeDatos.setDescripcion(descripcion); }
@@ -49,6 +56,7 @@ public abstract class Proyecto {
     public void setFechaDeFinalizacion(String fechaDeFinalizacion) throws ParseException {
         this.registroDeDatos.setFechaDeFinalizacion(fechaDeFinalizacion);
     }
+    public void setEstado(String nombreDeEstado) { this.registroDeDatos.setEstado(nombreDeEstado);}
 
 
     public EntidadProyecto obtenerEntidad() {
@@ -73,7 +81,10 @@ public abstract class Proyecto {
                 this.setFechaDeInicio((String) entrada.getValue());
             } else if (entrada.getKey().equals("fechaDeFinalizacion")) {
                 this.setFechaDeFinalizacion((String) entrada.getValue());
+            } else if (entrada.getKey().equals("estado")) {
+                this.setEstado((String) entrada.getValue());
             }
+
         }
     }
 }
