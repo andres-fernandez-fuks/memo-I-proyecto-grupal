@@ -1,0 +1,19 @@
+.proyectosDiv {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 35em;
+    width: 90%;
+    background: rgba(245, 245, 220, 0.7);
+}
+
+.proyectos-card {
+    display: flex;
+    align-self: center;
+    height: 20em;
+    width: 40em;
+}
+
+.proyectos-card .content {
+    align-content: center;
+}
