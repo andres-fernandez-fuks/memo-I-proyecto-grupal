@@ -4,3 +4,7 @@ Repositorio de la web de la tribu Mapache para la materia Análisis de la Inform
 ### Ejecutar aplicación
 
 Ejecutar `sudo docker-compose up --build` si es la primera vez, y luego `sudo docker-compose up`
+
+###Instalar docker: 
+https://docs.docker.com/engine/install/ubuntu/
+https://docs.docker.com/compose/install/
