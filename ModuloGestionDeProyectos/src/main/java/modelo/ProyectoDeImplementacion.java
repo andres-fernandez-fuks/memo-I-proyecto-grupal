@@ -32,12 +32,12 @@ public class ProyectoDeImplementacion extends Proyecto {
     }
 
     public void actualizar(Map<String, Object> parametros) throws ParseException {
-        super.actualizar(parametros);
         for (Map.Entry<String, Object> entrada : parametros.entrySet()) {
             if (entrada.getKey().equals("cliente")) {
                 this.setCliente((String) entrada.getValue());
             }
         }
+        super.actualizar(parametros);
     }
 }
 
