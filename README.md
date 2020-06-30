@@ -1,3 +1,6 @@
+# Módulo de gestión de recursos
+Para acceder a la documentación de la API ir a [http://localhost:8080//swagger-ui.html](http://localhost:8080/swagger-ui.html)
+
 ## Como correr Spring  
 Opción A:
 > ./mvnw spring-boot:run  

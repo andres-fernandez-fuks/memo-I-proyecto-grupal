@@ -9,7 +9,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.Map;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "tipoDeProyecto")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "tipoDeProyecto")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = ProyectoDeDesarrollo.class, name = "Desarrollo"),
         @JsonSubTypes.Type(value = ProyectoDeImplementacion.class, name = "Implementación")
