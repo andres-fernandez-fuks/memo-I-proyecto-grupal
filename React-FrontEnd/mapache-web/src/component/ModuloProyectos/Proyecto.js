@@ -1,8 +1,9 @@
 import React, {Component} from "react";
+import { withRouter } from 'react-router';
 import {Button, Card, Form} from "react-bootstrap";
 import axios from "axios";
 
-export default class Proyecto extends Component {
+class Proyecto extends Component {
     constructor(props) {
         super(props);
         this.state = this.estadoInicial;
@@ -10,21 +11,21 @@ export default class Proyecto extends Component {
         this.cambioProyecto = this.cambioProyecto.bind(this);
     }
 
-    estadoInicial = {id:'', nombre:'', tipo:''};
+    estadoInicial = {id:'', nombre:'', tipo:"Implementación"};
 
     crearProyecto = event => {
         event.preventDefault();
         const proyecto = {
-            id: this.state.id,
             nombre: this.state.nombre,
             tipoDeProyecto: this.state.tipo
         };
-
         axios.post("http://localhost:8080/proyectos", proyecto)
             .then(respuesta=> {
                 if(respuesta.data != null){
                     this.setState(this.estadoInicial);
                     alert("El proyecto se creo exitosamente");
+                } else {
+                    alert("El proyecto no pudo ser creado");
                 }
             })
     }
@@ -35,23 +36,50 @@ export default class Proyecto extends Component {
         });
     }
 
+    componentDidMount() {
+        const proyectoId = +this.props.match.params.id;
+        if(proyectoId){
+            axios.get("http://localhost:8080/proyectos/"+proyectoId)
+                .then(respuesta => {
+                    if(respuesta.data != null){
+                        this.setState({
+                            id: respuesta.data.id,
+                            nombre: respuesta.data.nombre,
+                            tipo: respuesta.data.tipoDeProyecto
+                        });
+                    }
+                }).catch((error) => {
+                    console.error("Error - "+error);
+            });
+        }
+    }
+
+    actualizarProyecto = event => {
+        event.preventDefault();
+        const proyecto = {
+            id: this.state.id,
+            nombre: this.state.nombre,
+            tipoDeProyecto: this.state.tipo
+        };
+        axios.put("http://localhost:8080/proyectos/"+proyecto.id, proyecto)
+            .then(respuesta=> {
+                if(respuesta.data != null){
+                    this.setState(this.estadoInicial);
+                    alert("El proyecto: " + proyecto.id+ " se actualizo exitosamente");
+                } else {
+                    alert("El proyecto no pudo ser actualizado");
+                }
+            })
+    };
+
     render() {
-        const {id, nombre, tipo} = this.state;
+        const {nombre, tipo} = this.state;
         return(
             <div className={"proyectoDiv"}>
                 <Card className={"proyecto-card"}>
-                    <Form id="formularioProyecto" onSubmit={this.crearProyecto}>
+                    <Form id="formularioProyecto" onSubmit={this.state.id ? this.actualizarProyecto : this.crearProyecto}>
                         <Card.Header>Agregar proyecto</Card.Header>
                         <Card.Body>
-                                <Form.Group controlId="formGridID">
-                                    <Form.Label>ID</Form.Label>
-                                    <Form.Control
-                                        required autoComplete="off"
-                                        type="text" name="id"
-                                        value={id}
-                                        onChange={this.cambioProyecto}
-                                    />
-                                </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Nombre</Form.Label>
                                     <Form.Control
@@ -63,18 +91,20 @@ export default class Proyecto extends Component {
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Tipo de proyecto</Form.Label>
-                                    <Form.Control
-                                        required autoComplete="off"
-                                        type="text" name="tipo"
-                                        value={tipo}
-                                        onChange={this.cambioProyecto}
-                                        placeholder="Implementación o Desarrollo"
-                                    />
+                                    <Form.Control as="select" custom
+                                                  value={tipo}
+                                                  onChange={this.cambioProyecto}
+                                                  required autoComplete="off"
+                                                  type="text" name="tipo"
+                                    >
+                                        <option value="Implementación">Implementación</option>
+                                        <option value="Desarrollo">Desarrollo</option>
+                                    </Form.Control>
                                 </Form.Group>
                         </Card.Body>
                         <Card.Footer>
                             <Button variant="success" type="submit">
-                                Crear Proyecto
+                                {this.state.id ? "Actualizar" : "Crear Proyecto"}
                             </Button>
                         </Card.Footer>
                     </Form>
@@ -83,3 +113,5 @@ export default class Proyecto extends Component {
         );
     }
 }
+
+export default withRouter(Proyecto);
