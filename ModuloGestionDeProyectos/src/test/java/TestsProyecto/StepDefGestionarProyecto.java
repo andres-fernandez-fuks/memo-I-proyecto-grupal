@@ -8,17 +8,21 @@ import persistencia.ProyectosRepository;
 
 import io.cucumber.datatable.DataTable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class StepDefGestionarProyecto extends SpringTest {
 
     private Proyecto proyecto;
     private String estado;
     private Map<Long,Long> diccionario_idOriginal_idNuevo = new HashMap<Long,Long>();
+    private Exception excepcion;
 
     @Given("un listado con proyectos cargados")
     public void unListadoConProyectosCargados(DataTable dt) {
@@ -53,5 +57,36 @@ public class StepDefGestionarProyecto extends SpringTest {
     @Then("el estado del proyecto es el correcto")
     public void elEstadoDelProyectoEsElCorrecto() {
         assertEquals(estado,proyecto.getEstado());
+    }
+
+    @When("asigno la fecha de inicio a {string}")
+    public void asignoLaFechaDeInicioA(String fecha) {
+        try {
+            proyecto.setFechaDeInicio(fecha);
+        } catch (ParseException e) {
+            this.excepcion = e;
+        }
+    }
+
+    @Then("la fecha de inicio del proyecto es {string}")
+    public void laFechaDeInicioDelProyectoEs(String fecha) {
+        try {
+            assertEquals(proyecto.getFechaDeInicio(), new SimpleDateFormat("dd/MM/yyyy").parse(fecha));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Given("selecciono un proyecto y le asigno la fecha de inicio {string}")
+    public void seleccionoUnProyectoYLeAsignoLaFechaDeInicio(String fecha) throws ParseException {
+        this.proyecto = new ProyectoDeDesarrollo("Proyecto X");
+        excepcion = null;
+        this.proyecto.setFechaDeInicio(fecha);
+    }
+
+    @Then("se lanza un error indicando que la fecha de inicio no se puede modificar")
+    public void seLanzaUnErrorIndicandoQueLaFechaDeInicioNoSePuedeModificar() {
+        assertNotNull(excepcion);
+        assertEquals(excepcion.getClass(), ParseException.class);
     }
 }

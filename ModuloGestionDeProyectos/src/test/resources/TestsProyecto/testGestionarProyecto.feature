@@ -22,3 +22,14 @@ Feature: Gestionar Proyecto
     #Given selecciono el proyecto "BI" con estado cancelado
     #When modifico su estado a "No Iniciado"
     #Then el estado del proyecto sigue siendo cancelado
+
+  Scenario: Asigno la fecha de inicio de un proyecto que no la tiene
+    Given selecciono el proyecto 1
+    When asigno la fecha de inicio a "10/7/2020"
+    Then la fecha de inicio del proyecto es "10/7/2020"
+
+  Scenario: Reasignar fecha de inicio lanza error
+    Given selecciono un proyecto y le asigno la fecha de inicio "10/7/2020"
+    When asigno la fecha de inicio a "11/11/2020"
+    Then se lanza un error indicando que la fecha de inicio no se puede modificar
+    And la fecha de inicio del proyecto es "10/7/2020"

@@ -21,7 +21,9 @@ public abstract class Proyecto {
     protected Long id;
     protected RegistroDeDatos registroDeDatos;
     protected String tipoDeProyecto;
-    public Proyecto(){}
+    public Proyecto(String nombre){
+        this.registroDeDatos = new RegistroDeDatos(nombre);
+    }
     public Proyecto(Long id, String nombre) {
         this.id = id;
         this.registroDeDatos = new RegistroDeDatos(nombre);
