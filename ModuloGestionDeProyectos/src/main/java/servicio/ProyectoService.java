@@ -32,7 +32,7 @@ public class ProyectoService {
 
     @Transactional
     public Proyecto saveNew(Proyecto proyecto){
-        if (proyectosRepository.existsById(proyecto.getId())){
+        if ((proyecto.getId() != null) && proyectosRepository.existsById(proyecto.getId())){
             proyecto.setId(null);
         }
         EntidadProyecto entidad = proyectosRepository.save(conversor.obtenerEntidad(proyecto));
@@ -66,4 +66,6 @@ public class ProyectoService {
         }
         proyectosRepository.save(conversor.obtenerEntidad(proyecto));
     }
+
+
 }

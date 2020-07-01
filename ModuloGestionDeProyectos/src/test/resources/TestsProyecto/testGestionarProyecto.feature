@@ -30,6 +30,7 @@ Feature: Gestionar Proyecto
 
   Scenario: Reasignar fecha de inicio lanza error
     Given selecciono un proyecto y le asigno la fecha de inicio "10/7/2020"
+    And cambio el estado de proyecto a iniciado
     When asigno la fecha de inicio a "11/11/2020"
     Then se lanza un error indicando que la fecha de inicio no se puede modificar
     And la fecha de inicio del proyecto es "10/7/2020"
@@ -38,3 +39,14 @@ Feature: Gestionar Proyecto
     Given selecciono un proyecto
     When asigno la fecha de inicio a "99/9a/2020"
     Then se lanza un error indicando que la fecha de inicio ingresada no es válida
+
+  Scenario:  Modificar el nombre y descripción de un proyecto los cambia correctamente
+    Given selecciono un proyecto con nombre "Prueba" y descripcion "Descripcion"
+    When le cambio el nombre a "Posta" y descripcion "Esto no es una prueba"
+    Then el nombre del proyecto es "Posta"
+    And la descripción es "Esto no es una prueba"
+
+  Scenario: Guardar un proyecto con una determinada fecha de inicio se guarda correctamente
+    Given creo un proyecto con fecha de inicio "10/07/2020"
+    When lo guardo en el repositorio
+    Then la fecha se guardo correctamente

@@ -24,6 +24,7 @@ public class ProyectoDeDesarrollo extends Proyecto {
 
     public ProyectoDeDesarrollo(String nombre) {
         super(nombre);
+        tipoDeProyecto = "Desarrollo";
     }
 
     public void actualizar(Map<String, Object> parametros) throws ParseException {
