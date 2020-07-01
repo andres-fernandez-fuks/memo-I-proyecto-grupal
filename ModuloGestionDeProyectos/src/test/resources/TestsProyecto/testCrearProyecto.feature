@@ -7,4 +7,3 @@ Feature: Creacion de un proyecto
       | 2 | adada   |
       | 4 | adsjkla |
     Then el listado de proyectos pasa a tener 3 elementos.
-

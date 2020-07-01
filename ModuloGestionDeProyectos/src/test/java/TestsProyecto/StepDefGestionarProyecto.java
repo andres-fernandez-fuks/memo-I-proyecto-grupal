@@ -104,4 +104,25 @@ public class StepDefGestionarProyecto extends SpringTest {
         this.proyecto = new ProyectoDeDesarrollo("Proyecto X");
         excepcion = null;
     }
+
+    @Given("creo un proyecto con fecha de inicio {string}")
+    public void creoUnProyectoConFechaDeInicio(String fecha) {
+        this.proyecto = new ProyectoDeDesarrollo("Proyecto Y");
+        try {
+            this.proyecto.setFechaDeInicio(fecha);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @When("lo guardo en el repositorio")
+    public void loGuardoEnElRepositorio() {
+        proyecto = listadoDeProyectos.saveNew(proyecto);
+    }
+
+    @Then("la fecha se guardo correctamente")
+    public void laFechaSeGuardoCorrectamente() {
+        Proyecto proyectoGuardado = listadoDeProyectos.getOne(proyecto.getId());
+        assertEquals(proyecto.getFechaDeInicio(),proyectoGuardado.getFechaDeFinalizacion());
+    }
 }

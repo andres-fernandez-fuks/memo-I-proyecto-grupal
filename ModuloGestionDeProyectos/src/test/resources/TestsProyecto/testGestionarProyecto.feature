@@ -46,3 +46,7 @@ Feature: Gestionar Proyecto
     Then el nombre del proyecto es "Posta"
     And la descripción es "Esto no es una prueba"
 
+  Scenario: Guardar un proyecto con una determinada fecha de inicio se guarda correctamente
+    Given creo un proyecto con fecha de inicio "10/07/2020"
+    When lo guardo en el repositorio
+    Then la fecha se guardo correctamente
