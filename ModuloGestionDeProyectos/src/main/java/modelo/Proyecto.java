@@ -7,6 +7,7 @@ import modelo.Estado.EstadoProyecto;
 import persistencia.EntidadProyecto;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public abstract class Proyecto {
     protected EstadoProyecto estado;
 
     protected Long id;
-    protected RegistroDeDatos registroDeDatos;
+    protected RegistroDeDatos registroDeDatos = new RegistroDeDatos();
     protected String tipoDeProyecto;
     public Proyecto(String nombre){
         this.registroDeDatos = new RegistroDeDatos(nombre);
@@ -31,6 +32,20 @@ public abstract class Proyecto {
         this.registroDeDatos = new RegistroDeDatos(nombre);
         this.estado = EstadoProyecto.NO_INICIADO;
     }
+
+    public Proyecto(EntidadProyecto proyecto){
+        this.registroDeDatos = new RegistroDeDatos();
+        this.id = proyecto.getId();
+        this.setEstado(proyecto.getEstado());
+        this.setNombre(proyecto.getNombre());
+        this.setDescripcion(proyecto.getDescripcion());
+        this.setFechaDeInicio(proyecto.getFechaDeInicio());
+        this.setFechaDeFinalizacion(proyecto.getFechaDeFin());
+
+    }
+
+
+
     public void modificar(Proyecto proyecto){
         registroDeDatos.setNombre(proyecto.getNombre());
         this.tipoDeProyecto = proyecto.getTipoDeProyecto();
@@ -50,9 +65,9 @@ public abstract class Proyecto {
     public String getEstado() {
         return estado.getNombre();
     }
-
     public void setNombre(String nombre) { this.registroDeDatos.setNombre(nombre);}
     public void setDescripcion(String descripcion) { this.registroDeDatos.setDescripcion(descripcion); }
+    public void setFechaDeInicio(Date fechaDeInicio){ this.registroDeDatos.setFechaDeInicio(fechaDeInicio);}
     public void setFechaDeInicio(String fechaDeInicio) throws ParseException,RestriccionDeEstadoException {
         if (!estado.getNombre().equals("No iniciado")) {
             throw new RestriccionDeEstadoException("No se puede cambiar la fecha de inicio de un proyecto iniciado");
@@ -62,6 +77,10 @@ public abstract class Proyecto {
     public void setFechaDeFinalizacion(String fechaDeFinalizacion) throws ParseException {
         this.registroDeDatos.setFechaDeFinalizacion(fechaDeFinalizacion);
     }
+    private void setFechaDeFinalizacion(Date fechaDeFin) {
+        registroDeDatos.setFechaDeFinalizacion(fechaDeFin);
+    }
+    public void setEstado(String nombreDeEstado) { this.registroDeDatos.setEstado(nombreDeEstado);}
 
     public boolean setEstado(String nombreDeEstado) {
         if (this.estado == EstadoProyecto.CANCELADO || this.estado == EstadoProyecto.FINALIZADO) { return false;}
@@ -77,10 +96,20 @@ public abstract class Proyecto {
 
 
     public EntidadProyecto obtenerEntidad() {
-        if (id == null){
-            return new EntidadProyecto(registroDeDatos.getNombre(), tipoDeProyecto);
+        EntidadProyecto entidad = new EntidadProyecto();
+        if (id != null){
+            entidad.setId(id);
         }
-        return new EntidadProyecto(id, registroDeDatos.getNombre(), tipoDeProyecto);
+        entidad.setTipoDeProyecto(tipoDeProyecto);
+        entidad.setNombre(registroDeDatos.getNombre());
+        entidad.setDescripcion(registroDeDatos.getDescripcion());
+        entidad.setEstado(estado.getNombre());
+        entidad.setFechaDeInicio(registroDeDatos.getFechaDeInicio());
+        entidad.setFechaDeFin(registroDeDatos.getFechaDeFinalizacion());
+        if (tipoDeProyecto.equals("Implementación")){
+            ((ProyectoDeImplementacion)this).ingresarDatos(entidad);
+        }
+        return entidad;
     }
 
     public void setId(Long id) {

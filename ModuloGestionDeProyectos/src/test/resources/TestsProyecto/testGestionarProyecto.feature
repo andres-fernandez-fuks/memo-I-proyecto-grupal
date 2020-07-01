@@ -39,3 +39,10 @@ Feature: Gestionar Proyecto
     Given selecciono un proyecto
     When asigno la fecha de inicio a "99/9a/2020"
     Then se lanza un error indicando que la fecha de inicio ingresada no es válida
+
+  Scenario:  Modificar el nombre y descripción de un proyecto los cambia correctamente
+    Given selecciono un proyecto con nombre "Prueba" y descripcion "Descripcion"
+    When le cambio el nombre a "Posta" y descripcion "Esto no es una prueba"
+    Then el nombre del proyecto es "Posta"
+    And la descripción es "Esto no es una prueba"
+

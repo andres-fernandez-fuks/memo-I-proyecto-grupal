@@ -19,8 +19,9 @@ public class ProyectoDeImplementacion extends Proyecto {
     }
 
     public ProyectoDeImplementacion(EntidadProyecto proyecto) {
-        super(proyecto.getId(), proyecto.getNombre());
+        super(proyecto);
         tipoDeProyecto = "Implementación";
+        cliente = proyecto.getCliente();
     }
 
     public void asociarCliente(String nombreDeCliente) { cliente = nombreDeCliente;}
@@ -38,6 +39,9 @@ public class ProyectoDeImplementacion extends Proyecto {
             }
         }
         super.actualizar(parametros);
+    }
+    public void ingresarDatos(EntidadProyecto entidadProyecto){
+        entidadProyecto.setCliente(cliente);
     }
 }
 
