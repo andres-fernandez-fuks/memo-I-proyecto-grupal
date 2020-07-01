@@ -30,6 +30,7 @@ Feature: Gestionar Proyecto
 
   Scenario: Reasignar fecha de inicio lanza error
     Given selecciono un proyecto y le asigno la fecha de inicio "10/7/2020"
+    And cambio el estado de proyecto a iniciado
     When asigno la fecha de inicio a "11/11/2020"
     Then se lanza un error indicando que la fecha de inicio no se puede modificar
     And la fecha de inicio del proyecto es "10/7/2020"

@@ -2,6 +2,7 @@ package modelo;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import excepciones.RestriccionDeEstadoException;
 import modelo.Estado.EstadoProyecto;
 import persistencia.EntidadProyecto;
 
@@ -23,6 +24,7 @@ public abstract class Proyecto {
     protected String tipoDeProyecto;
     public Proyecto(String nombre){
         this.registroDeDatos = new RegistroDeDatos(nombre);
+        this.estado = EstadoProyecto.NO_INICIADO;
     }
     public Proyecto(Long id, String nombre) {
         this.id = id;
@@ -30,7 +32,6 @@ public abstract class Proyecto {
         this.estado = EstadoProyecto.NO_INICIADO;
     }
     public void modificar(Proyecto proyecto){
-        //this.nombre = proyecto.getNombre();
         registroDeDatos.setNombre(proyecto.getNombre());
         this.tipoDeProyecto = proyecto.getTipoDeProyecto();
     }
@@ -47,18 +48,32 @@ public abstract class Proyecto {
     public Date getFechaDeInicio() { return this.registroDeDatos.getFechaDeInicio();}
     public Date getFechaDeFinalizacion() { return this.registroDeDatos.getFechaDeFinalizacion();}
     public String getEstado() {
-        return registroDeDatos.getEstado();
+        return estado.getNombre();
     }
 
     public void setNombre(String nombre) { this.registroDeDatos.setNombre(nombre);}
     public void setDescripcion(String descripcion) { this.registroDeDatos.setDescripcion(descripcion); }
-    public void setFechaDeInicio(String fechaDeInicio) throws ParseException {
-        this.registroDeDatos.setFechaDeInicio(fechaDeInicio);
+    public void setFechaDeInicio(String fechaDeInicio) throws ParseException,RestriccionDeEstadoException {
+        if (!estado.getNombre().equals("No iniciado")) {
+            throw new RestriccionDeEstadoException("No se puede cambiar la fecha de inicio de un proyecto iniciado");
+        }
+        registroDeDatos.setFechaDeInicio(fechaDeInicio);
     }
     public void setFechaDeFinalizacion(String fechaDeFinalizacion) throws ParseException {
         this.registroDeDatos.setFechaDeFinalizacion(fechaDeFinalizacion);
     }
-    public void setEstado(String nombreDeEstado) { this.registroDeDatos.setEstado(nombreDeEstado);}
+
+    public boolean setEstado(String nombreDeEstado) {
+        if (this.estado == EstadoProyecto.CANCELADO || this.estado == EstadoProyecto.FINALIZADO) { return false;}
+        switch (nombreDeEstado) {
+            case "No iniciado": this.estado = EstadoProyecto.NO_INICIADO;
+            case "Activo": this.estado = EstadoProyecto.ACTIVO;
+            case "Suspendido": this.estado = EstadoProyecto.SUSPENDIDO;
+            case "Cancelado": this.estado = EstadoProyecto.CANCELADO;
+            case "Finalizado": this.estado = EstadoProyecto.FINALIZADO;
+        }
+        return true;
+    }
 
 
     public EntidadProyecto obtenerEntidad() {

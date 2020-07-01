@@ -1,5 +1,7 @@
 package TestsProyecto;
 
+import excepciones.RestriccionDeEstadoException;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -63,7 +65,7 @@ public class StepDefGestionarProyecto extends SpringTest {
     public void asignoLaFechaDeInicioA(String fecha) {
         try {
             proyecto.setFechaDeInicio(fecha);
-        } catch (ParseException e) {
+        } catch (ParseException|RestriccionDeEstadoException e) {
             this.excepcion = e;
         }
     }
@@ -87,7 +89,7 @@ public class StepDefGestionarProyecto extends SpringTest {
     @Then("se lanza un error indicando que la fecha de inicio no se puede modificar")
     public void seLanzaUnErrorIndicandoQueLaFechaDeInicioNoSePuedeModificar() {
         assertNotNull(excepcion);
-        assertEquals(excepcion.getClass(), ParseException.class);
+        assertEquals(excepcion.getClass(), RestriccionDeEstadoException.class);
     }
 
     @Then("se lanza un error indicando que la fecha de inicio ingresada no es válida")
@@ -100,5 +102,11 @@ public class StepDefGestionarProyecto extends SpringTest {
     public void seleccionoUnProyecto() {
         this.proyecto = new ProyectoDeDesarrollo("Proyecto X");
         excepcion = null;
+    }
+
+    @And("cambio el estado de proyecto a iniciado")
+    public void cambioElEstadoDeProyectoAIniciado() {
+        this.proyecto.setEstado("Activo");
+
     }
 }
