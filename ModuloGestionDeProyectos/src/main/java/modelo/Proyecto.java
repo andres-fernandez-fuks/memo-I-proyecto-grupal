@@ -18,23 +18,20 @@ import java.util.Map;
 })
 public abstract class Proyecto {
 
-    protected EstadoProyecto estado;
+    protected EstadoProyecto estado = EstadoProyecto.NO_INICIADO;
 
     protected Long id;
     protected RegistroDeDatos registroDeDatos = new RegistroDeDatos();
     protected String tipoDeProyecto;
     public Proyecto(String nombre){
-        this.registroDeDatos = new RegistroDeDatos(nombre);
-        this.estado = EstadoProyecto.NO_INICIADO;
+        this.setNombre(nombre);
     }
     public Proyecto(Long id, String nombre) {
         this.id = id;
-        this.registroDeDatos = new RegistroDeDatos(nombre);
-        this.estado = EstadoProyecto.NO_INICIADO;
+        this.setNombre(nombre);
     }
 
     public Proyecto(EntidadProyecto proyecto){
-        this.registroDeDatos = new RegistroDeDatos();
         this.id = proyecto.getId();
         this.setEstado(proyecto.getEstado());
         this.setNombre(proyecto.getNombre());
@@ -80,7 +77,6 @@ public abstract class Proyecto {
     private void setFechaDeFinalizacion(Date fechaDeFin) {
         registroDeDatos.setFechaDeFinalizacion(fechaDeFin);
     }
-    public void setEstado(String nombreDeEstado) { this.registroDeDatos.setEstado(nombreDeEstado);}
 
     public boolean setEstado(String nombreDeEstado) {
         if (this.estado == EstadoProyecto.CANCELADO || this.estado == EstadoProyecto.FINALIZADO) { return false;}
