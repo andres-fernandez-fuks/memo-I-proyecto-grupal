@@ -89,4 +89,16 @@ public class StepDefGestionarProyecto extends SpringTest {
         assertNotNull(excepcion);
         assertEquals(excepcion.getClass(), ParseException.class);
     }
+
+    @Then("se lanza un error indicando que la fecha de inicio ingresada no es válida")
+    public void seLanzaUnErrorIndicandoQueLaFechaDeInicioIngresadaNoEsVálida() {
+        assertNotNull(excepcion);
+        assertEquals(excepcion.getClass(), ParseException.class);
+    }
+
+    @Given("selecciono un proyecto")
+    public void seleccionoUnProyecto() {
+        this.proyecto = new ProyectoDeDesarrollo("Proyecto X");
+        excepcion = null;
+    }
 }

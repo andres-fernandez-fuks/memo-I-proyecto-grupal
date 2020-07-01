@@ -33,3 +33,8 @@ Feature: Gestionar Proyecto
     When asigno la fecha de inicio a "11/11/2020"
     Then se lanza un error indicando que la fecha de inicio no se puede modificar
     And la fecha de inicio del proyecto es "10/7/2020"
+
+  Scenario: Asignar una fecha de inicio con formato inválido lanza un error
+    Given selecciono un proyecto
+    When asigno la fecha de inicio a "99/9a/2020"
+    Then se lanza un error indicando que la fecha de inicio ingresada no es válida
