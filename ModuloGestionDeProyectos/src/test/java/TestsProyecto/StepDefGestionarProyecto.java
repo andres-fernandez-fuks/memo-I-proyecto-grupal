@@ -11,6 +11,7 @@ import persistencia.ProyectosRepository;
 
 import io.cucumber.datatable.DataTable;
 
+import javax.xml.crypto.Data;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -126,5 +127,33 @@ public class StepDefGestionarProyecto extends SpringTest {
     @And("cambio el estado de proyecto a activo")
     public void cambioElEstadoDeProyectoAIniciado() {
         this.proyecto.setEstado("Activo");
+    }
+
+
+    @When("creo una fase para el proyecto con los siguientes datos")
+    public void creoUnaFaseParaElProyectoConLosSiguientesDatos(DataTable dt) {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (int i = 0; i < list.size(); i++){
+            boolean res = proyecto.crearFase( list.get(i).get("nombre"),
+                                list.get(i).get("descripcion"),
+                                list.get(i).get("fecha de inicio"),
+                                list.get(i).get("fecha de finalizacion"));
+            assertTrue(res);
+        }
+    }
+
+    @Then("la fase se agrega al proyecto con los datos correspondientes.")
+    public void laFaseSeAgregaAlProyectoConLosDatosCorrespondientes(DataTable dt) throws ParseException {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        List<Fase> fases = proyecto.obtenerFases();
+        for (int i = 0; i < list.size(); i++) {
+            assertEquals(list.get(i).get("nombre"), fases.get(i).getNombre());
+            assertEquals(list.get(i).get("descripcion"), fases.get(i).getDescripcion());
+            assertEquals(new SimpleDateFormat("dd/MM/yyyy").parse(list.get(i).get("fecha de inicio")), fases.get(i).getFechaDeInicio());
+            assertEquals(new SimpleDateFormat("dd/MM/yyyy").parse(list.get(i).get("fecha de finalizacion")), fases.get(i).getFechaDeFinalizacion());
+        }
+
+
+
     }
 }

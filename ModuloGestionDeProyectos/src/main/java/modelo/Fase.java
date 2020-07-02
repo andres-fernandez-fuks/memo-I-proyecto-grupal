@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Fase {
 
-    private RegistroDeDatos registroDeDatos;
+    private RegistroDeDatos registroDeDatos = new RegistroDeDatos();
 
     public Fase(String nombre) {
         registroDeDatos.setNombre(nombre);

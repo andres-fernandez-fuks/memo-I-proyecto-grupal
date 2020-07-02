@@ -8,7 +8,9 @@ import persistencia.EntidadProyecto;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "tipoDeProyecto")
@@ -22,6 +24,7 @@ public abstract class Proyecto {
     protected Long id;
     protected RegistroDeDatos registroDeDatos = new RegistroDeDatos();
     protected String tipoDeProyecto;
+    protected List<Fase> fases = new ArrayList<Fase>();
 
     public Proyecto(){}
     public Proyecto(String nombre){
@@ -129,5 +132,22 @@ public abstract class Proyecto {
             }
 
         }
+    }
+
+    public boolean crearFase(String nombre, String descripcion, String fecha_de_inicio, String fecha_de_finalizacion) {
+        Fase aux = new Fase(nombre);
+        aux.setDescripcion(descripcion);
+        try {
+            aux.setFechaDeInicio(fecha_de_inicio);
+            aux.setFechaDeFinalizacion(fecha_de_finalizacion);
+        } catch (ParseException e) {
+            return false;
+        }
+        fases.add(aux);
+        return true;
+    }
+
+    public List<Fase> obtenerFases() {
+        return fases;
     }
 }

@@ -1,28 +1,27 @@
 package persistencia;
 
+import modelo.Proyecto;
+
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-@Table(name = "proyectos")
-public class EntidadProyecto {
+@Table(name = "fases")
+public class EntidadFase {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String tipoDeProyecto;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "entidadproyectoId")
+    private EntidadProyecto proyecto;
     private String nombre;
     private String descripcion;
     private String estado;
     private Date fechaDeInicio;
     private Date fechaDeFin;
-    //Solo si es de implementacion
-    private String cliente;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "proyecto")
-    private List<EntidadFase> fases;
-
-    public EntidadProyecto() {}
+    public EntidadFase(){}
 
     public Long getId() {
         return id;
@@ -38,14 +37,6 @@ public class EntidadProyecto {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getTipoDeProyecto() {
-        return tipoDeProyecto;
-    }
-
-    public void setTipoDeProyecto(String tipoDeProyecto) {
-        this.tipoDeProyecto = tipoDeProyecto;
     }
 
     public String getDescripcion() {
@@ -78,13 +69,5 @@ public class EntidadProyecto {
 
     public void setFechaDeFin(Date fechaDeFin) {
         this.fechaDeFin = fechaDeFin;
-    }
-
-    public String getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(String cliente) {
-        this.cliente = cliente;
     }
 }
