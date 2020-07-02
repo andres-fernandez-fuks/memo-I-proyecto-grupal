@@ -24,7 +24,7 @@ public class StepDefGestionarProyecto extends SpringTest {
 
     private Proyecto proyecto;
     private String estado;
-    private Map<Long,Long> diccionario_idOriginal_idNuevo = new HashMap<Long,Long>();
+    private Map<String,Long> diccionario_nombre_id = new HashMap<>();
     private Exception excepcion;
 
     @Given("un listado con proyectos cargados")
@@ -33,21 +33,20 @@ public class StepDefGestionarProyecto extends SpringTest {
         for (Map<String, String> fila : listaDeMapas) {
             Proyecto proyecto;
             Proyecto proyecto_guardado;
-            long id = Long.parseLong(fila.get("id"));
             String nombre = fila.get("nombre");
             if (fila.get("tipo").equals("Desarrollo")) {
-                proyecto = new ProyectoDeDesarrollo(id,nombre);
+                proyecto = new ProyectoDeDesarrollo(nombre);
             }
-            else { proyecto = new ProyectoDeImplementacion(id,nombre); }
+            else { proyecto = new ProyectoDeImplementacion(nombre); }
             proyecto_guardado = listadoDeProyectos.save(proyecto);
-            diccionario_idOriginal_idNuevo.put(id,proyecto_guardado.getId());
+            diccionario_nombre_id.put(fila.get("nombre"),proyecto_guardado.getId());
         }
     }
 
-    @Given("selecciono el proyecto {long}")
-    public void seleccionoElProyecto(long idDeProyecto) {
-        System.out.print(diccionario_idOriginal_idNuevo.get(idDeProyecto));
-        Proyecto proyecto = listadoDeProyectos.getOne(diccionario_idOriginal_idNuevo.get(idDeProyecto));
+    @Given("selecciono el proyecto {string}")
+    public void seleccionoElProyecto(String nombreDeProyecto) {
+        System.out.print(diccionario_nombre_id.get(nombreDeProyecto));
+        Proyecto proyecto = listadoDeProyectos.getOne(diccionario_nombre_id.get(nombreDeProyecto));
         this.proyecto = proyecto;
     }
 
@@ -124,5 +123,10 @@ public class StepDefGestionarProyecto extends SpringTest {
     public void laFechaSeGuardoCorrectamente() {
         Proyecto proyectoGuardado = listadoDeProyectos.getOne(proyecto.getId());
         assertEquals(proyecto.getFechaDeInicio(),proyectoGuardado.getFechaDeFinalizacion());
+    }
+
+    @And("cambio el estado de proyecto a activo")
+    public void cambioElEstadoDeProyectoAIniciado() {
+        this.proyecto.setEstado("Activo");
     }
 }

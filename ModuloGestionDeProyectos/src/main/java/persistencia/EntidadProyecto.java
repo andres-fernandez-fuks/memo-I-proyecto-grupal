@@ -21,7 +21,6 @@ public class EntidadProyecto {
     public EntidadProyecto() {}
 
     public EntidadProyecto(long id, String nombre, String tipoDeProyecto) {
-        this.id = id;
         this.nombre = nombre;
         this.tipoDeProyecto = tipoDeProyecto;
     }

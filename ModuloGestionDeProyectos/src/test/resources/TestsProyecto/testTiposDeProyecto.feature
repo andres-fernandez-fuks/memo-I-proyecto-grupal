@@ -8,15 +8,15 @@ Feature: Atributos de un proyecto
   Scenario: Verifico los tipos de proyectos
     Given un listado de proyectos
     When creo proyectos de distinto tipo
-      | id | nombre |      tipo      |
-      | 1  | imp_1  | Implementación |
-      | 2  | des_1  | Desarrollo     |
-      | 3  | des_2  | Desarrollo     |
-      | 4  | imp_2  | Implementación |
+    | nombre |      tipo      |
+    | imp_1  | Implementación |
+    | des_1  | Desarrollo     |
+    | des_2  | Desarrollo     |
+    | imp_2  | Implementación |
 
     Then se me devuelven los tipos correctos para cada proyecto
-      | id|     tipo       |
-      | 1 | Implementación |
-      | 2 | Desarrollo     |
-      | 3 | Desarrollo     |
-      | 4 | Implementación |
+      | nombre |      tipo      |
+      | imp_1  | Implementación |
+      | des_1  | Desarrollo     |
+      | des_2  | Desarrollo     |
+      | imp_2  | Implementación |

@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class StepDefCrearProyecto extends SpringTest{
+public class StepDefCrearProyecto extends SpringTest {
 
     @Given("un listado de proyectos vacio")
     public void unListadoDeProyectosVacio() {
@@ -25,7 +25,7 @@ public class StepDefCrearProyecto extends SpringTest{
         List<List<String>> lista = dt.asLists();
         Proyecto proyecto;
         for (List<String> proyectos : lista) {
-            proyecto = new ProyectoDeDesarrollo(Integer.parseInt(proyectos.get(0)),proyectos.get(1));
+            proyecto = new ProyectoDeDesarrollo(Integer.parseInt(proyectos.get(0)), proyectos.get(1));
             listadoDeProyectos.save(proyecto);
         }
     }
@@ -34,6 +34,5 @@ public class StepDefCrearProyecto extends SpringTest{
     public void elProyectoSeCreaYSeAgregaAlListadoDeProyectos(int cantElementos) {
         assertEquals(cantElementos, listadoDeProyectos.findAll().size());
     }
-
 
 }

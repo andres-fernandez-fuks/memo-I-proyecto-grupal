@@ -31,13 +31,13 @@ public abstract class Proyecto {
         this.setNombre(nombre);
     }
 
-    public Proyecto(EntidadProyecto proyecto){
-        this.id = proyecto.getId();
-        this.setEstado(proyecto.getEstado());
-        this.setNombre(proyecto.getNombre());
-        this.setDescripcion(proyecto.getDescripcion());
-        this.setFechaDeInicio(proyecto.getFechaDeInicio());
-        this.setFechaDeFinalizacion(proyecto.getFechaDeFin());
+    public Proyecto(EntidadProyecto entidadProyecto){
+        this.id = entidadProyecto.getId();
+        this.setEstado(entidadProyecto.getEstado());
+        this.setNombre(entidadProyecto.getNombre());
+        this.setDescripcion(entidadProyecto.getDescripcion());
+        this.setFechaDeInicio(entidadProyecto.getFechaDeInicio());
+        this.setFechaDeFinalizacion(entidadProyecto.getFechaDeFin());
 
     }
 
@@ -82,10 +82,15 @@ public abstract class Proyecto {
         if (this.estado == EstadoProyecto.CANCELADO || this.estado == EstadoProyecto.FINALIZADO) { return false;}
         switch (nombreDeEstado) {
             case "No iniciado": this.estado = EstadoProyecto.NO_INICIADO;
+            break;
             case "Activo": this.estado = EstadoProyecto.ACTIVO;
+            break;
             case "Suspendido": this.estado = EstadoProyecto.SUSPENDIDO;
+            break;
             case "Cancelado": this.estado = EstadoProyecto.CANCELADO;
+            break;
             case "Finalizado": this.estado = EstadoProyecto.FINALIZADO;
+            break;
         }
         return true;
     }
@@ -93,9 +98,7 @@ public abstract class Proyecto {
 
     public EntidadProyecto obtenerEntidad() {
         EntidadProyecto entidad = new EntidadProyecto();
-        if (id != null){
-            entidad.setId(id);
-        }
+
         entidad.setTipoDeProyecto(tipoDeProyecto);
         entidad.setNombre(registroDeDatos.getNombre());
         entidad.setDescripcion(registroDeDatos.getDescripcion());

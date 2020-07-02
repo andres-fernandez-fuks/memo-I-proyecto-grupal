@@ -7,11 +7,16 @@ import io.cucumber.java.en.When;
 import modelo.Proyecto;
 import modelo.ProyectoDeImplementacion;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
 public class StepDefEliminarProyectos extends SpringTest{
+
+    private Proyecto proyecto_guardado;
+    private Map<String,Long> diccionario_nombre_id = new HashMap();
 
     @Before
     public void setup() {
@@ -21,8 +26,9 @@ public class StepDefEliminarProyectos extends SpringTest{
     public void existenProyectosCargadosEnElSistema(int cantidadDeProyectos) {
         Proyecto proyecto;
         for (int i = 1; i <= cantidadDeProyectos; i++) {
-            proyecto = new ProyectoDeImplementacion(i,"Proyecto "+i);
-            listadoDeProyectos.saveNew(proyecto);
+            proyecto = new ProyectoDeImplementacion("Proyecto "+i);
+            proyecto_guardado = listadoDeProyectos.save(proyecto);
+            diccionario_nombre_id.put("Proyecto "+i,proyecto_guardado.getId());
         }
     }
 
@@ -30,7 +36,8 @@ public class StepDefEliminarProyectos extends SpringTest{
     public void eliminoProyectos(int cantidadAEliminar) {
         List<Proyecto> lista = listadoDeProyectos.findAll();
         for (int i = 1; i <= cantidadAEliminar; i++) {
-            listadoDeProyectos.delete(lista.get(i));
+            long id = diccionario_nombre_id.get("Proyecto "+i);
+            listadoDeProyectos.deleteById(id);
         }
     }
 

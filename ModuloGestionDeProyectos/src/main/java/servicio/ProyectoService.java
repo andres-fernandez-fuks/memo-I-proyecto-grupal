@@ -47,7 +47,8 @@ public class ProyectoService {
         if (!proyectosRepository.existsById(id)){
             throw new ProyectoNotFoundException("Proyecto con id: " + id + " no encontrado");
         }
-        return conversor.obtenerProyecto(proyectosRepository.getOne(id));
+        EntidadProyecto entidad = proyectosRepository.getOne(id);
+        return conversor.obtenerProyecto(entidad);
     }
 
     public void deleteById(long id) {
@@ -66,6 +67,5 @@ public class ProyectoService {
         }
         proyectosRepository.save(conversor.obtenerEntidad(proyecto));
     }
-
 
 }

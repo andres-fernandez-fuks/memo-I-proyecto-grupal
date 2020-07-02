@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 public class StepDefTiposDeProyecto extends SpringTest{
 
-    private Map<Long,Long> diccionario_idOriginal_idNuevo = new HashMap<Long,Long>();
+    private Map<String,Long> diccionario_nombre_id = new HashMap<String,Long>();
 
     @Given("un listado de proyectos")
     public void unListadoVacio() { listadoDeProyectos.deleteAll(); }
@@ -31,15 +31,14 @@ public class StepDefTiposDeProyecto extends SpringTest{
         Proyecto proyecto_guardado;
         long id;
         for (Map<String,String> fila: listaDeMapas) {
-            id = Long.parseLong(fila.get("id"));
             if (fila.get("tipo").equals("Implementación")) {
-                proyecto = new ProyectoDeImplementacion(id,fila.get("nombre"));
+                proyecto = new ProyectoDeImplementacion(fila.get("nombre"));
             }
             else {
-                proyecto = new ProyectoDeDesarrollo(id,fila.get("nombre"));
+                proyecto = new ProyectoDeDesarrollo(fila.get("nombre"));
             }
             proyecto_guardado = listadoDeProyectos.save(proyecto);
-            diccionario_idOriginal_idNuevo.put(id,proyecto_guardado.getId());
+            diccionario_nombre_id.put(fila.get("nombre"),proyecto_guardado.getId());
         }
     }
 
@@ -48,8 +47,7 @@ public class StepDefTiposDeProyecto extends SpringTest{
         List<Map<String, String>> lista = dt.asMaps();
         int diferencias_encontradas = 0;
         for (Map<String, String> fila : lista) {
-            long id_viejo = Long.parseLong(fila.get("id"));
-            Proyecto proyecto = listadoDeProyectos.getOne(diccionario_idOriginal_idNuevo.get(id_viejo));
+            Proyecto proyecto = listadoDeProyectos.getOne(diccionario_nombre_id.get(fila.get("nombre")));
             assertEquals(fila.get("tipo"),proyecto.getTipoDeProyecto());
         }
 
