@@ -25,7 +25,7 @@ public class StepDefCrearProyecto extends SpringTest {
         List<List<String>> lista = dt.asLists();
         Proyecto proyecto;
         for (List<String> proyectos : lista) {
-            proyecto = new ProyectoDeDesarrollo(Integer.parseInt(proyectos.get(0)), proyectos.get(1));
+            proyecto = new ProyectoDeDesarrollo(proyectos.get(1));
             listadoDeProyectos.save(proyecto);
         }
     }

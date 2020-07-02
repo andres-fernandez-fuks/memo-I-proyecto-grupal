@@ -12,13 +12,12 @@ import java.util.Map;
 
 public class ProyectoDeDesarrollo extends Proyecto {
 
-    public ProyectoDeDesarrollo(long id, String nombre) {
-        super(id,nombre);
-        tipoDeProyecto = "Desarrollo";
+    public  ProyectoDeDesarrollo() {
+        super();
+        this.tipoDeProyecto = "Desarrollo";
     }
-
     public ProyectoDeDesarrollo(EntidadProyecto proyecto) {
-        super(proyecto.getId(), proyecto.getNombre());
+        super(proyecto);
         tipoDeProyecto = "Desarrollo";
     }
 

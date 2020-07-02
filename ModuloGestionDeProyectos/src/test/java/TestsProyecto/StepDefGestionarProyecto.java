@@ -13,10 +13,7 @@ import io.cucumber.datatable.DataTable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -122,7 +119,8 @@ public class StepDefGestionarProyecto extends SpringTest {
     @Then("la fecha se guardo correctamente")
     public void laFechaSeGuardoCorrectamente() {
         Proyecto proyectoGuardado = listadoDeProyectos.getOne(proyecto.getId());
-        assertEquals(proyecto.getFechaDeInicio(),proyectoGuardado.getFechaDeFinalizacion());
+        assertEquals(proyecto.getFechaDeInicio().getClass(), Date.class);
+        assertEquals(proyecto.getFechaDeInicio(),proyectoGuardado.getFechaDeInicio());
     }
 
     @And("cambio el estado de proyecto a activo")

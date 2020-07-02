@@ -13,6 +13,10 @@ import java.util.Objects;
 public class ProyectoDeImplementacion extends Proyecto {
 
     private String cliente;
+    public ProyectoDeImplementacion() {
+        super();
+        tipoDeProyecto = "Implementación";
+    }
     public ProyectoDeImplementacion(String nombre) {
         super(nombre);
         tipoDeProyecto = "Implementación";

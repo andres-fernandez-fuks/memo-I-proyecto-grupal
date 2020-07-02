@@ -19,17 +19,15 @@ import java.util.Map;
 public abstract class Proyecto {
 
     protected EstadoProyecto estado = EstadoProyecto.NO_INICIADO;
-
     protected Long id;
     protected RegistroDeDatos registroDeDatos = new RegistroDeDatos();
     protected String tipoDeProyecto;
+
+    public Proyecto(){}
     public Proyecto(String nombre){
         this.setNombre(nombre);
     }
-    public Proyecto(Long id, String nombre) {
-        this.id = id;
-        this.setNombre(nombre);
-    }
+
 
     public Proyecto(EntidadProyecto entidadProyecto){
         this.id = entidadProyecto.getId();
