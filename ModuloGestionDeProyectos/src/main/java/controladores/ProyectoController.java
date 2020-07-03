@@ -44,6 +44,7 @@ public class ProyectoController {
 
     @PutMapping("/proyectos/{id}")
     ResponseEntity<Proyecto> guardarProyecto(@PathVariable(value="id") Long id, @RequestBody Proyecto proyecto){
+        proyecto.setId(id);
         return new ResponseEntity<Proyecto>(servicio.save(proyecto), HttpStatus.OK);
     }
 

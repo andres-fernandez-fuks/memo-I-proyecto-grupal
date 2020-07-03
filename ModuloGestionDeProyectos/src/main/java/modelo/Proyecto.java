@@ -99,7 +99,7 @@ public abstract class Proyecto {
 
     public EntidadProyecto obtenerEntidad() {
         EntidadProyecto entidad = new EntidadProyecto();
-
+        entidad.setId(id);
         entidad.setTipoDeProyecto(tipoDeProyecto);
         entidad.setNombre(registroDeDatos.getNombre());
         entidad.setDescripcion(registroDeDatos.getDescripcion());
