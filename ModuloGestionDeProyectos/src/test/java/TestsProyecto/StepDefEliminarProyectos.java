@@ -20,30 +20,30 @@ public class StepDefEliminarProyectos extends SpringTest{
 
     @Before
     public void setup() {
-        listadoDeProyectos.deleteAll();
+        proyectoService.deleteAll();
     }
     @Given("existen {int} proyectos cargados en el sistema")
     public void existenProyectosCargadosEnElSistema(int cantidadDeProyectos) {
         Proyecto proyecto;
         for (int i = 1; i <= cantidadDeProyectos; i++) {
             proyecto = new ProyectoDeImplementacion("Proyecto "+i);
-            proyecto_guardado = listadoDeProyectos.save(proyecto);
+            proyecto_guardado = proyectoService.save(proyecto);
             diccionario_nombre_id.put("Proyecto "+i,proyecto_guardado.getId());
         }
     }
 
     @When("elimino {int} proyectos")
     public void eliminoProyectos(int cantidadAEliminar) {
-        List<Proyecto> lista = listadoDeProyectos.findAll();
+        List<Proyecto> lista = proyectoService.findAll();
         for (int i = 1; i <= cantidadAEliminar; i++) {
             long id = diccionario_nombre_id.get("Proyecto "+i);
-            listadoDeProyectos.deleteById(id);
+            proyectoService.deleteById(id);
         }
     }
 
     @Then("quedan {int} elementos cargados en el sistema")
     public void quedanElementosCargadosEnElSistema(int cantidadDeProyectosRestantes) {
-        assertEquals(cantidadDeProyectosRestantes,listadoDeProyectos.findAll().size());
+        assertEquals(cantidadDeProyectosRestantes, proyectoService.findAll().size());
     }
 
 }

@@ -1,5 +1,6 @@
 package persistencia;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import modelo.Proyecto;
 
 import javax.persistence.*;
@@ -12,8 +13,9 @@ public class EntidadFase {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "entidadproyectoId")
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "proyecto_Id")
     private EntidadProyecto proyecto;
     private String nombre;
     private String descripcion;

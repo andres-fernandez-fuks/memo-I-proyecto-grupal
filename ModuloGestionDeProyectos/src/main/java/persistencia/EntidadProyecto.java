@@ -1,6 +1,9 @@
 package persistencia;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +12,7 @@ import java.util.List;
 public class EntidadProyecto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "proyecto_Id")
     private Long id;
     private String tipoDeProyecto;
     private String nombre;
@@ -18,9 +22,10 @@ public class EntidadProyecto {
     private Date fechaDeFin;
     //Solo si es de implementacion
     private String cliente;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "proyecto")
-    private List<EntidadFase> fases;
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="proyecto_id", referencedColumnName="proyecto_id")
+    private List<EntidadFase> fases = new ArrayList<>();
 
     public EntidadProyecto() {}
 
@@ -86,5 +91,13 @@ public class EntidadProyecto {
 
     public void setCliente(String cliente) {
         this.cliente = cliente;
+    }
+
+    public List<EntidadFase> getFases() {
+        return fases;
+    }
+
+    public void setFases(List<EntidadFase> fases) {
+        this.fases = fases;
     }
 }

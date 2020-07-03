@@ -3,16 +3,19 @@ package servicio;
 import excepciones.ParametrosInvalidosException;
 import excepciones.ProyectoNotFoundException;
 import modelo.Proyecto;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import persistencia.Conversor;
 import persistencia.EntidadProyecto;
 import persistencia.ProyectosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
+
+import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 
 @Service
 public class ProyectoService {
@@ -21,20 +24,19 @@ public class ProyectoService {
 
     private Conversor conversor = new Conversor();
 
+    @Transactional(propagation = Propagation.REQUIRED, noRollbackFor=Exception.class)
     public List<Proyecto> findAll(){
         return conversor.obtenerProyectos(proyectosRepository.findAll());
     }
-
+    @Transactional(propagation = Propagation.REQUIRED, noRollbackFor=Exception.class)
     public Proyecto save(Proyecto proyecto){
         EntidadProyecto entidad = proyectosRepository.save(conversor.obtenerEntidad(proyecto));
         return conversor.obtenerProyecto(entidad);
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED, noRollbackFor=Exception.class)
     public Proyecto saveNew(Proyecto proyecto){
-        if ((proyecto.getId() != null) && proyectosRepository.existsById(proyecto.getId())){
-            proyecto.setId(null);
-        }
+        proyecto.setId(null);
         EntidadProyecto entidad = proyectosRepository.save(conversor.obtenerEntidad(proyecto));
         return conversor.obtenerProyecto(entidad);
     }
@@ -42,7 +44,7 @@ public class ProyectoService {
         proyectosRepository.delete(conversor.obtenerEntidad(proyecto));
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED, noRollbackFor=Exception.class)
     public Proyecto getOne(long id) {
         if (!proyectosRepository.existsById(id)){
             throw new ProyectoNotFoundException("Proyecto con id: " + id + " no encontrado");

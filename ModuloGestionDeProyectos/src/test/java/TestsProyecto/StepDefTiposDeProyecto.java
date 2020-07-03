@@ -7,8 +7,6 @@ import io.cucumber.java.en.When;
 import modelo.Proyecto;
 import modelo.ProyectoDeDesarrollo;
 import modelo.ProyectoDeImplementacion;
-import persistencia.ProyectosRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.util.HashMap;
@@ -22,7 +20,7 @@ public class StepDefTiposDeProyecto extends SpringTest{
     private Map<String,Long> diccionario_nombre_id = new HashMap<String,Long>();
 
     @Given("un listado de proyectos")
-    public void unListadoVacio() { listadoDeProyectos.deleteAll(); }
+    public void unListadoVacio() { proyectoService.deleteAll(); }
 
     @When("creo proyectos de distinto tipo")
     public void creoProyectos(DataTable dt) {
@@ -37,7 +35,7 @@ public class StepDefTiposDeProyecto extends SpringTest{
             else {
                 proyecto = new ProyectoDeDesarrollo(fila.get("nombre"));
             }
-            proyecto_guardado = listadoDeProyectos.save(proyecto);
+            proyecto_guardado = proyectoService.save(proyecto);
             diccionario_nombre_id.put(fila.get("nombre"),proyecto_guardado.getId());
         }
     }
@@ -47,7 +45,7 @@ public class StepDefTiposDeProyecto extends SpringTest{
         List<Map<String, String>> lista = dt.asMaps();
         int diferencias_encontradas = 0;
         for (Map<String, String> fila : lista) {
-            Proyecto proyecto = listadoDeProyectos.getOne(diccionario_nombre_id.get(fila.get("nombre")));
+            Proyecto proyecto = proyectoService.getOne(diccionario_nombre_id.get(fila.get("nombre")));
             assertEquals(fila.get("tipo"),proyecto.getTipoDeProyecto());
         }
 

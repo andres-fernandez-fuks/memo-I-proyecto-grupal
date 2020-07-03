@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import excepciones.RestriccionDeEstadoException;
 import modelo.Estado.EstadoProyecto;
+import persistencia.EntidadFase;
 import persistencia.EntidadProyecto;
 
 import java.text.ParseException;
@@ -24,6 +25,9 @@ public abstract class Proyecto {
     protected Long id;
     protected RegistroDeDatos registroDeDatos = new RegistroDeDatos();
     protected String tipoDeProyecto;
+
+
+
     protected List<Fase> fases = new ArrayList<Fase>();
 
     public Proyecto(){}
@@ -39,9 +43,14 @@ public abstract class Proyecto {
         this.setDescripcion(entidadProyecto.getDescripcion());
         this.setFechaDeInicio(entidadProyecto.getFechaDeInicio());
         this.setFechaDeFinalizacion(entidadProyecto.getFechaDeFin());
-
+        for(int i = 0; i < entidadProyecto.getFases().size(); ++i){
+            this.crearFase(entidadProyecto.getFases().get(i));
+        }
     }
 
+    private void crearFase(EntidadFase entidadFase) {
+        fases.add(new Fase(entidadFase));
+    }
 
 
     public void modificar(Proyecto proyecto){
@@ -106,10 +115,19 @@ public abstract class Proyecto {
         entidad.setEstado(estado.getNombre());
         entidad.setFechaDeInicio(registroDeDatos.getFechaDeInicio());
         entidad.setFechaDeFin(registroDeDatos.getFechaDeFinalizacion());
+        entidad.setFases(obtenerEntidadFases());
         if (tipoDeProyecto.equals("Implementación")){
             ((ProyectoDeImplementacion)this).ingresarDatos(entidad);
         }
         return entidad;
+    }
+
+    private List<EntidadFase> obtenerEntidadFases() {
+        List <EntidadFase> entidadFases = new ArrayList<EntidadFase>();
+        for (Fase fase : fases) {
+            entidadFases.add(fase.obtenerEntidad());
+        }
+        return entidadFases;
     }
 
     public void setId(Long id) {

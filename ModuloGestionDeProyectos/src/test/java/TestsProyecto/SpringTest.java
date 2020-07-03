@@ -17,6 +17,6 @@ import java.util.List;
 @ContextConfiguration(classes = Aplicacion.class)
 public class SpringTest {
     @Autowired
-    protected ProyectoService listadoDeProyectos;
+    protected ProyectoService proyectoService;
 
 }

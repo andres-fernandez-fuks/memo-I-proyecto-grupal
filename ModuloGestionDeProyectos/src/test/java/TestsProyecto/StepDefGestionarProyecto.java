@@ -2,16 +2,13 @@ package TestsProyecto;
 
 import excepciones.RestriccionDeEstadoException;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import modelo.*;
-import persistencia.ProyectosRepository;
 
 import io.cucumber.datatable.DataTable;
 
-import javax.xml.crypto.Data;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -36,7 +33,7 @@ public class StepDefGestionarProyecto extends SpringTest {
                 proyecto = new ProyectoDeDesarrollo(nombre);
             }
             else { proyecto = new ProyectoDeImplementacion(nombre); }
-            proyecto_guardado = listadoDeProyectos.save(proyecto);
+            proyecto_guardado = proyectoService.save(proyecto);
             diccionario_nombre_id.put(fila.get("nombre"),proyecto_guardado.getId());
         }
     }
@@ -44,7 +41,7 @@ public class StepDefGestionarProyecto extends SpringTest {
     @Given("selecciono el proyecto {string}")
     public void seleccionoElProyecto(String nombreDeProyecto) {
         System.out.print(diccionario_nombre_id.get(nombreDeProyecto));
-        Proyecto proyecto = listadoDeProyectos.getOne(diccionario_nombre_id.get(nombreDeProyecto));
+        Proyecto proyecto = proyectoService.getOne(diccionario_nombre_id.get(nombreDeProyecto));
         this.proyecto = proyecto;
     }
 
@@ -114,12 +111,12 @@ public class StepDefGestionarProyecto extends SpringTest {
 
     @When("lo guardo en el repositorio")
     public void loGuardoEnElRepositorio() {
-        proyecto = listadoDeProyectos.saveNew(proyecto);
+        proyecto = proyectoService.saveNew(proyecto);
     }
 
     @Then("la fecha se guardo correctamente")
     public void laFechaSeGuardoCorrectamente() {
-        Proyecto proyectoGuardado = listadoDeProyectos.getOne(proyecto.getId());
+        Proyecto proyectoGuardado = proyectoService.getOne(proyecto.getId());
         assertEquals(proyecto.getFechaDeInicio().getClass(), Date.class);
         assertEquals(proyecto.getFechaDeInicio(),proyectoGuardado.getFechaDeInicio());
     }
@@ -152,8 +149,31 @@ public class StepDefGestionarProyecto extends SpringTest {
             assertEquals(new SimpleDateFormat("dd/MM/yyyy").parse(list.get(i).get("fecha de inicio")), fases.get(i).getFechaDeInicio());
             assertEquals(new SimpleDateFormat("dd/MM/yyyy").parse(list.get(i).get("fecha de finalizacion")), fases.get(i).getFechaDeFinalizacion());
         }
+    }
 
+    @When("creo una fase para el proyecto con los siguientes datos y lo guardo")
+    public void creoUnaFaseParaElProyectoConLosSiguientesDatosYLoGuardo(DataTable dt) {
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        for (int i = 0; i < list.size(); i++){
+            boolean res = proyecto.crearFase( list.get(i).get("nombre"),
+                    list.get(i).get("descripcion"),
+                    list.get(i).get("fecha de inicio"),
+                    list.get(i).get("fecha de finalizacion"));
+            assertTrue(res);
+        }
+        proyecto = proyectoService.saveNew(proyecto);
+    }
 
-
+    @Then("la fase guardada se agrega al proyecto con los datos correspondientes.")
+    public void laFaseGuardadaSeAgregaAlProyectoConLosDatosCorrespondientes(DataTable dt) throws ParseException {
+        List <Fase> fases = proyectoService.getOne(proyecto.getId()).obtenerFases();
+        List<Map<String, String>> list = dt.asMaps(String.class, String.class);
+        assertEquals(list.size(), fases.size());
+        for (int i = 0; i < list.size(); i++){
+            assertEquals(list.get(i).get("nombre"), fases.get(i).getNombre());
+            assertEquals(list.get(i).get("descripcion"), fases.get(i).getDescripcion());
+            assertEquals(new SimpleDateFormat("dd/MM/yyyy").parse(list.get(i).get("fecha de inicio")), fases.get(i).getFechaDeInicio());
+            assertEquals(new SimpleDateFormat("dd/MM/yyyy").parse(list.get(i).get("fecha de finalizacion")), fases.get(i).getFechaDeFinalizacion());
+        }
     }
 }
