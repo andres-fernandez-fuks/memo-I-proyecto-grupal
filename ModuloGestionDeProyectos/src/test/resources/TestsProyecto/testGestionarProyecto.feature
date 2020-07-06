@@ -50,21 +50,3 @@ Feature: Gestionar Proyecto
     Given creo un proyecto con fecha de inicio "07-10-2020"
     When lo guardo en el repositorio
     Then la fecha se guardo correctamente
-
-  Scenario:Creo una fase para el proyecto
-    Given selecciono un proyecto
-    When creo una fase para el proyecto con los siguientes datos
-      | nombre  | descripcion | fecha de inicio | fecha de finalizacion |
-      | Fase 1 | Esta es la primera fase del proyecto | 09-10-2020 | 09-15-2020 |
-    Then la fase se agrega al proyecto con los datos correspondientes.
-      | nombre  | descripcion | fecha de inicio | fecha de finalizacion |
-      | Fase 1 | Esta es la primera fase del proyecto | 09-10-2020 | 09-15-2020 |
-
-  Scenario: Creo una fase en un proyecto que se persiste
-    Given selecciono un proyecto
-    When creo una fase para el proyecto con los siguientes datos y lo guardo
-      | nombre  | descripcion | fecha de inicio | fecha de finalizacion |
-      | Fase 1 | Esta es la primera fase del proyecto | 09-10-2020 | 09-15-2020 |
-    Then la fase guardada se agrega al proyecto con los datos correspondientes.
-      | nombre  | descripcion | fecha de inicio | fecha de finalizacion |
-      | Fase 1 | Esta es la primera fase del proyecto | 09-10-2020 | 09-15-2020 |
