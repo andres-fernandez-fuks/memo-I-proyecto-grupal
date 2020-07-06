@@ -40,9 +40,8 @@ public class StepDefGestionarProyecto extends SpringTest {
 
     @Given("selecciono el proyecto {string}")
     public void seleccionoElProyecto(String nombreDeProyecto) {
-        System.out.print(diccionario_nombre_id.get(nombreDeProyecto));
-        Proyecto proyecto = proyectoService.getOne(diccionario_nombre_id.get(nombreDeProyecto));
-        this.proyecto = proyecto;
+        long id = diccionario_nombre_id.get(nombreDeProyecto);
+        this.proyecto =  proyectoService.getOne(id);;
     }
 
     @When("modifico su estado a {string}")
@@ -176,4 +175,29 @@ public class StepDefGestionarProyecto extends SpringTest {
             assertEquals(new SimpleDateFormat("MM-dd-yyyy").parse(list.get(i).get("fecha de finalizacion")), fases.get(i).getFechaDeFinalizacion());
         }
     }
+
+    @Given("selecciono el proyecto {string} con estado {string}")
+    public void seleccionoElProyectoConUnEstado(String nombreDeProyecto,String estado) {
+        long id = diccionario_nombre_id.get(nombreDeProyecto);
+        Proyecto proyecto = proyectoService.getOne(id);
+        proyecto.setEstado(estado);
+        this.proyecto = proyecto;
+    }
+
+    @Then("el estado del proyecto sigue siendo {string}")
+    public void elEstadoDelProyectoSigueSiendoElMismo(String estadoEsperado) {
+        assertTrue(this.proyecto.getEstado().equals(estadoEsperado));
+    }
+
+    @When("le cambio el nombre a {string} y descripcion {string}")
+    public void leCambioElNombreAYDescripcion(String nuevoNombre, String nuevaDescripcion) {
+        proyecto.setNombre(nuevoNombre);
+        proyecto.setDescripcion(nuevaDescripcion);
+    }
+
+    @Then("el nombre del proyecto es {string}")
+    public void elNombreDelProyectoEs(String nombreCorrecto) { assertEquals(nombreCorrecto,proyecto.getNombre()); }
+
+    @And("la descripción es {string}")
+    public void laDescripciónEs(String descripcion) { assertEquals(descripcion,proyecto.getDescripcion()); }
 }
