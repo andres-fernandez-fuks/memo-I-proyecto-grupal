@@ -68,7 +68,7 @@ public class StepDefGestionarProyecto extends SpringTest {
     @Then("la fecha de inicio del proyecto es {string}")
     public void laFechaDeInicioDelProyectoEs(String fecha) {
         try {
-            assertEquals(new SimpleDateFormat("MM/dd/yyyy").parse(fecha), proyecto.getFechaDeInicio());
+            assertEquals(new SimpleDateFormat("MM-dd-yyyy").parse(fecha), proyecto.getFechaDeInicio());
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -146,8 +146,8 @@ public class StepDefGestionarProyecto extends SpringTest {
         for (int i = 0; i < list.size(); i++) {
             assertEquals(list.get(i).get("nombre"), fases.get(i).getNombre());
             assertEquals(list.get(i).get("descripcion"), fases.get(i).getDescripcion());
-            assertEquals(new SimpleDateFormat("MM/dd/yyyy").parse(list.get(i).get("fecha de inicio")), fases.get(i).getFechaDeInicio());
-            assertEquals(new SimpleDateFormat("MM/dd/yyyy").parse(list.get(i).get("fecha de finalizacion")), fases.get(i).getFechaDeFinalizacion());
+            assertEquals(new SimpleDateFormat("MM-dd-yyyy").parse(list.get(i).get("fecha de inicio")), fases.get(i).getFechaDeInicio());
+            assertEquals(new SimpleDateFormat("MM-dd-yyyy").parse(list.get(i).get("fecha de finalizacion")), fases.get(i).getFechaDeFinalizacion());
         }
     }
 
@@ -172,8 +172,8 @@ public class StepDefGestionarProyecto extends SpringTest {
         for (int i = 0; i < list.size(); i++){
             assertEquals(list.get(i).get("nombre"), fases.get(i).getNombre());
             assertEquals(list.get(i).get("descripcion"), fases.get(i).getDescripcion());
-            assertEquals(new SimpleDateFormat("MM/dd/yyyy").parse(list.get(i).get("fecha de inicio")), fases.get(i).getFechaDeInicio());
-            assertEquals(new SimpleDateFormat("MM/dd/yyyy").parse(list.get(i).get("fecha de finalizacion")), fases.get(i).getFechaDeFinalizacion());
+            assertEquals(new SimpleDateFormat("MM-dd-yyyy").parse(list.get(i).get("fecha de inicio")), fases.get(i).getFechaDeInicio());
+            assertEquals(new SimpleDateFormat("MM-dd-yyyy").parse(list.get(i).get("fecha de finalizacion")), fases.get(i).getFechaDeFinalizacion());
         }
     }
 }

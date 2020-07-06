@@ -25,19 +25,19 @@ Feature: Gestionar Proyecto
 
   Scenario: Asigno la fecha de inicio de un proyecto que no la tiene
     Given selecciono el proyecto "Sistema ERP Mulesoft"
-    When asigno la fecha de inicio a "07/10/2020"
-    Then la fecha de inicio del proyecto es "07/10/2020"
+    When asigno la fecha de inicio a "07-10-2020"
+    Then la fecha de inicio del proyecto es "07-10-2020"
 
   Scenario: Reasignar fecha de inicio lanza error
-    Given selecciono un proyecto y le asigno la fecha de inicio "07/10/2020"
+    Given selecciono un proyecto y le asigno la fecha de inicio "07-10-2020"
     And cambio el estado de proyecto a activo
-    When asigno la fecha de inicio a "11/11/2020"
+    When asigno la fecha de inicio a "11-11-2020"
     Then se lanza un error indicando que la fecha de inicio no se puede modificar
-    And la fecha de inicio del proyecto es "07/10/2020"
+    And la fecha de inicio del proyecto es "07-10-2020"
 
   Scenario: Asignar una fecha de inicio con formato inválido lanza un error
     Given selecciono un proyecto
-    When asigno la fecha de inicio a "99/9a/2020"
+    When asigno la fecha de inicio a "99-9a-2020"
     Then se lanza un error indicando que la fecha de inicio ingresada no es válida
 
   #Scenario:  Modificar el nombre y descripción de un proyecto los cambia correctamente
@@ -47,7 +47,7 @@ Feature: Gestionar Proyecto
     #And la descripción es "Esto no es una prueba"
 
   Scenario: Guardar un proyecto con una determinada fecha de inicio se guarda correctamente
-    Given creo un proyecto con fecha de inicio "07/10/2020"
+    Given creo un proyecto con fecha de inicio "07-10-2020"
     When lo guardo en el repositorio
     Then la fecha se guardo correctamente
 
@@ -55,16 +55,16 @@ Feature: Gestionar Proyecto
     Given selecciono un proyecto
     When creo una fase para el proyecto con los siguientes datos
       | nombre  | descripcion | fecha de inicio | fecha de finalizacion |
-      | Fase 1 | Esta es la primera fase del proyecto | 09/10/2020 | 09/15/2020 |
+      | Fase 1 | Esta es la primera fase del proyecto | 09-10-2020 | 09-15-2020 |
     Then la fase se agrega al proyecto con los datos correspondientes.
       | nombre  | descripcion | fecha de inicio | fecha de finalizacion |
-      | Fase 1 | Esta es la primera fase del proyecto | 09/10/2020 | 09/15/2020 |
+      | Fase 1 | Esta es la primera fase del proyecto | 09-10-2020 | 09-15-2020 |
 
   Scenario: Creo una fase en un proyecto que se persiste
     Given selecciono un proyecto
     When creo una fase para el proyecto con los siguientes datos y lo guardo
       | nombre  | descripcion | fecha de inicio | fecha de finalizacion |
-      | Fase 1 | Esta es la primera fase del proyecto | 09/10/2020 | 09/15/2020 |
+      | Fase 1 | Esta es la primera fase del proyecto | 09-10-2020 | 09-15-2020 |
     Then la fase guardada se agrega al proyecto con los datos correspondientes.
       | nombre  | descripcion | fecha de inicio | fecha de finalizacion |
-      | Fase 1 | Esta es la primera fase del proyecto | 09/10/2020 | 09/15/2020 |
+      | Fase 1 | Esta es la primera fase del proyecto | 09-10-2020 | 09-15-2020 |
